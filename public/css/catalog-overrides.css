@@ -1,0 +1,22 @@
+/* Sidebar sticky com rolagem própria (>= lg) */
+@media (min-width: 992px) {
+    .sidebar{
+        position: sticky;
+        top: 84px;                        /* ajuste se tua navbar tiver outra altura */
+        max-height: calc(100vh - 100px);  /* evita passar do viewport */
+        overflow: auto;
+        padding-right: 6px;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+        align-self: flex-start;
+    }
+}
+@media (max-width: 991.98px){
+    .sidebar{ position: static; max-height: none; overflow: visible; padding-right: 0; }
+}
+
+/* Scrollbar discreta (opcional) */
+.sidebar::-webkit-scrollbar{ width: 8px; }
+.sidebar::-webkit-scrollbar-thumb{ background:#e0e0e0; border-radius:8px; }
+.sidebar:hover::-webkit-scrollbar-thumb{ background:#cfcfcf; }
+

@@ -9,9 +9,10 @@ class Business extends Model
 {
     protected $fillable = [
         'user_id','name','slug','logo_url','about',
-        'avg_rating','items_count','status',
+        'avg_rating','items_count','status','logo_url','logo_path'
     ];
 
+    protected $appends = ['logo_src'];
     protected $casts = [
         'avg_rating'=>'decimal:1',
         'items_count'=>'integer',
@@ -37,4 +38,13 @@ class Business extends Model
         return 'slug';
     }
 
+    public function getLogoSrcAttribute(): ?string
+    {
+        if ($this->logo_path) {
+            // use asset() pra respeitar host+porta do ambiente local
+            return asset('storage/' . ltrim($this->logo_path, '/'));
+            // ou: return \Storage::disk('public')->url($this->logo_path);
+        }
+        return $this->logo_url ?: null;
+    }
 }

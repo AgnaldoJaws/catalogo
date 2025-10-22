@@ -29,10 +29,8 @@
     $distanceKm = $isArray ? ($loc['distance_km'] ?? null) : ($loc->distance_km ?? null);
 
     // Thumb (fallback para picsum)
-    $thumb = $isArray
-        ? ($loc['thumb_url'] ?? null)
-        : (optional($b->media)->first()->url ?? null);
-    $thumb = $thumb ?: 'https://picsum.photos/600/400?random='.(is_scalar($businessSlug)?crc32($businessSlug):rand(1,9999));
+   $thumb =  asset('img/img_1.png') ;
+
 
     // Aberto agora (quando o repo calcular)
     $isOpen = $isArray ? !empty($loc['is_open_now']) : (bool)($loc->is_open_now ?? false);

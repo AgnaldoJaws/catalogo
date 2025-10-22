@@ -23,6 +23,7 @@ class BusinessController extends Controller
         }
 
         $menu = $this->menu->getMenu($slug);
+
         return view('business.show', [
             'business' => $business,
             'sections' => $menu['sections'] ?? [],

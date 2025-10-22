@@ -20,11 +20,15 @@ class BusinessService implements BusinessServiceInterface
 
         $locs = $this->locations->listByBusiness($b->id);
 
+        $logo = $b->logo_src
+            ?? ($b->logo_path ? asset('storage/'.ltrim($b->logo_path, '/')) : null)
+            ?? $b->logo_url;
+
         return [
             'id'         => $b->id,
             'name'       => $b->name,
             'slug'       => $b->slug,
-            'logo_url'   => $b->logo_url,
+            'logo_url'   => $logo,
             'about'      => $b->about,
             'avg_rating' => (float) $b->avg_rating,
             'items_count'=> (int) $b->items_count,

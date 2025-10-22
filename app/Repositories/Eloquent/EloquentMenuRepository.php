@@ -35,6 +35,7 @@ class EloquentMenuRepository implements MenuRepositoryInterface
 
         // Mapeia estrutura enxuta para retorno
         $resultSections = $sections->map(function ($sec) {
+
             return [
                 'id'     => $sec->id,
                 'name'   => $sec->name,
@@ -43,7 +44,7 @@ class EloquentMenuRepository implements MenuRepositoryInterface
                     'name'      => $i->name,
                     'desc'      => $i->description,
                     'price'     => $i->price_cents,
-                    'img'       => $i->image_url,
+                    'img'       => $i->image_src,
                     'tags'      => $i->tags,
                     'prep_min'  => $i->prep_time_minutes,
                 ])->values(),

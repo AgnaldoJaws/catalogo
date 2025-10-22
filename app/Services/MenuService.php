@@ -37,7 +37,10 @@ class MenuService implements MenuServiceInterface
                             'desc'     => (string) (Arr::get($it, 'description') ?? Arr::get($it, 'desc', '')),
                             // aceita price em centavos (int) ou decimal (string/float)
                             'price'    => $this->normalizePrice(Arr::get($it, 'price')),
-                            'img'      => Arr::get($it, 'image_url') ?? Arr::get($it, 'img'),
+                            'img'      => Arr::get($it, 'image_src')
+                                ?? (!empty($it['image_path']) ? asset('storage/'.ltrim($it['image_path'], '/')) : null)
+                                    ?? Arr::get($it, 'image_url')
+                                    ?? Arr::get($it, 'img'),
                             'tags'     => (array)  (Arr::get($it, 'tags', []) ?: []),
                             'prep_min' => Arr::get($it, 'prep_min'),
                         ];

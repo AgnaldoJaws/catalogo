@@ -24,4 +24,7 @@ interface BusinessAdminRepositoryInterface
     public function createMenuItem(int $sectionId, array $data): int;
     public function updateMenuItem(int $itemId, array $data): bool;
     public function deleteMenuItem(int $itemId): bool;
+    public function findLocationOrFail(int $businessId, int $locationId);
+    public function setLocationStatus(int $businessId, int $locationId, int $status): void;
+
 }

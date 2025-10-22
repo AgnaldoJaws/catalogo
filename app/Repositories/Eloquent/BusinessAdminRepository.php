@@ -13,18 +13,27 @@ class BusinessAdminRepository implements BusinessAdminRepositoryInterface
 
     public function updateProfile(int $id, array $data): bool {
         $biz = Business::findOrFail($id);
+
         $biz->fill([
-            'name'       => $data['name'] ?? $biz->name,
-            'about'      => $data['about'] ?? $biz->about,
-            'whatsapp'   => $data['whatsapp'] ?? $biz->whatsapp,
-            'instagram'  => $data['instagram'] ?? $biz->instagram ?? null,
-            'facebook'   => $data['facebook'] ?? $biz->facebook ?? null,
+            'name'      => $data['name']      ?? $biz->name,
+            'about'     => $data['about']     ?? $biz->about,
+            'whatsapp'  => $data['whatsapp']  ?? $biz->whatsapp,
+            'instagram' => $data['instagram'] ?? $biz->instagram,
+            'facebook'  => $data['facebook']  ?? $biz->facebook,
+            'logo_url'  => $data['logo_url']  ?? $biz->logo_url,
         ]);
+
+        if (!empty($data['logo_path'])) {     // veio upload
+            $biz->logo_path = $data['logo_path'];
+            // opcional: $biz->logo_url = null;
+        }
+
         return $biz->save();
     }
 
+
     public function listLocations(int $businessId): array {
-        return BusinessLocation::where('business_id', $businessId)
+        return BusinessLocation::with('city')->where('business_id', $businessId)
             ->orderBy('id')->get()->toArray();
     }
 
@@ -85,51 +94,69 @@ class BusinessAdminRepository implements BusinessAdminRepositoryInterface
         return MenuItem::where('section_id', $sectionId)
             ->orderBy('sort_order')
             ->get()
-            ->map(function ($it) {
+            ->map(function (MenuItem $it) {
+                $imageSrc = method_exists($it, 'getImageSrcAttribute') ? $it->image_src : ($it->image_url ?? null);
+
                 return [
-                    'id'          => $it->id,
-                    'name'        => $it->name,
-                    'description' => $it->description,
-                    'price'       => $it->price_cents,          // normaliza
-                    'img_url'     => $it->image_url,
-                    'prep_min'    => $it->prep_time_minutes,
-                    'tags'        => is_array($it->tags) ? implode(',', $it->tags) : $it->tags,
-                    'is_available'=> (bool) $it->is_available,
-                    'sort_order'  => $it->sort_order,
+                    'id'           => $it->id,
+                    'name'         => $it->name,
+                    'description'  => $it->description,
+                    'price'        => $it->price_cents,                         // view espera 'price'
+                    'img_url'      => $it->image_url,                           // view espera 'img_url'
+                    'prep_min'     => $it->prep_time_minutes,                   // view espera 'prep_min'
+                    'tags'         => is_array($it->tags) ? implode(',', $it->tags) : ($it->tags ?? ''),
+                    'is_available' => (bool) $it->is_available,
+                    'sort_order'   => $it->sort_order,
+                    'image_src'    => $imageSrc,
                 ];
             })
             ->toArray();
     }
 
+    public function createMenuItem(int $sectionId, array $data): int
+    {
+        if (empty($data['business_id'])) {
+            throw new \InvalidArgumentException('business_id é obrigatório');
+        }
 
-    public function createMenuItem(int $sectionId, array $data): int {
-        $it = new MenuItem([
-            'section_id' => $sectionId,
-            'name'       => $data['name'],
-            'description'=> $data['description'] ?? null,
-            'price'      => $data['price'] ?? 0,
-            'img_url'    => $data['img_url'] ?? null,
-            'is_available' => array_key_exists('is_available',$data) ? (int)$data['is_available'] : 1,
-            'sort_order' => $data['sort_order'] ?? 0,
-            'prep_min'   => $data['prep_min'] ?? 0,
-            'tags'       => $data['tags'] ?? null,
-        ]);
-        $it->save();
-        return (int) $it->id;
+        $payload = [
+            'business_id'        => (int) $data['business_id'],
+            'section_id'         => (int) $sectionId,
+            'name'               => $data['name'],
+            'description'        => $data['description'] ?? null,
+            'price_cents'        => (int) ($data['price'] ?? 0),               // price -> price_cents
+            'image_url'          => $data['img_url'] ?? null,                  // img_url -> image_url
+            'image_path'         => $data['image_path'] ?? null,               // se veio upload
+            'is_available'       => array_key_exists('is_available',$data) ? (int) $data['is_available'] : 1,
+            'sort_order'         => (int) ($data['sort_order'] ?? 0),
+            'prep_time_minutes'  => (int) ($data['prep_min'] ?? 0),            // prep_min -> prep_time_minutes
+            'tags'               => $data['tags'] ?? null,                     // se coluna for JSON, mantenha array
+        ];
+
+        $item = MenuItem::create($payload);
+        return (int) $item->id;
     }
 
-    public function updateMenuItem(int $itemId, array $data): bool {
+    public function updateMenuItem(int $itemId, array $data): bool
+    {
         $it = MenuItem::findOrFail($itemId);
-        $it->fill([
-            'name'       => $data['name'] ?? $it->name,
-            'description'=> $data['description'] ?? $it->description,
-            'price'      => $data['price'] ?? $it->price,
-            'img_url'    => $data['img_url'] ?? $it->img_url,
-            'is_available' => array_key_exists('is_available',$data) ? (int)$data['is_available'] : $it->is_available,
-            'sort_order' => $data['sort_order'] ?? $it->sort_order,
-            'prep_min'   => $data['prep_min'] ?? $it->prep_min,
-            'tags'       => $data['tags'] ?? $it->tags,
-        ]);
+
+        $payload = [
+            'name'               => $data['name'] ?? $it->name,
+            'description'        => $data['description'] ?? $it->description,
+            'price_cents'        => array_key_exists('price',$data) ? (int) $data['price'] : $it->price_cents,
+            'image_url'          => array_key_exists('img_url',$data) ? $data['img_url'] : $it->image_url,
+            'is_available'       => array_key_exists('is_available',$data) ? (int) $data['is_available'] : $it->is_available,
+            'sort_order'         => array_key_exists('sort_order',$data) ? (int) $data['sort_order'] : $it->sort_order,
+            'prep_time_minutes'  => array_key_exists('prep_min',$data) ? (int) $data['prep_min'] : $it->prep_time_minutes,
+            'tags'               => array_key_exists('tags',$data) ? $data['tags'] : $it->tags,
+        ];
+
+        if (!empty($data['image_path'])) {
+            $payload['image_path'] = $data['image_path'];
+        }
+
+        $it->fill($payload);
         return $it->save();
     }
 

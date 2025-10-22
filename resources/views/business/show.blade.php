@@ -1,13 +1,14 @@
 @php
     use Illuminate\Support\Str;
 
-    // Sanitiza número de WhatsApp (só dígitos)
-    $waNumber = '13981927262';//preg_replace('/\D+/', '', $business['whatsapp'] ?? '');
+    // número WA do negócio atual (fallback). Deixe vazio se quiser só por item/loja.
+    $waNumber = '13981927262'; //preg_replace('/\D+/', '', $business['whatsapp'] ?? '');
 
-    // Lista única de categorias (nomes de seções)
-    $cats = collect($sections ?? [])->pluck('name')->filter()->unique()->values();
-    // Helper para preço em R$
+    // helper preço em R$
     $fmt = fn($cents) => 'R$ '.number_format(($cents ?? 0)/100, 2, ',', '.');
+
+    // lista única de categorias (opcional – usado na sidebar)
+    $cats = collect($sections ?? [])->pluck('name')->filter()->unique()->values();
 @endphp
 
     <!doctype html>
@@ -16,71 +17,54 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{{ $business['name'] ?? 'Empresa' }} — Cardápio</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    <style>
-        :root{
-            --ifood-red:#EA1D2C; --ifood-red-600:#d21927;
-            --ifood-ink:#2b2b2b; --ifood-muted:#6f6f6f;
-            --ifood-bg:#f7f7f7; --ifood-border:#ececec;
-        }
-        body{ background:var(--ifood-bg); color:var(--ifood-ink); }
-        .navbar{ background:#fff; border-bottom:1px solid var(--ifood-border); }
-        .btn-primary{ background:var(--ifood-red); border-color:var(--ifood-red); }
-        .btn-primary:hover{ background:var(--ifood-red-600); border-color:var(--ifood-red-600); }
-        .logo-mark{ width:108px; height:28px; background:var(--ifood-red); border-radius:6px; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; letter-spacing:.5px; }
-        .brand-card{background:#fff;border:1px solid var(--ifood-border);box-shadow:0 4px 20px rgba(0,0,0,.06);border-radius:16px}
-        .brand-logo{width:80px;height:80px;border-radius:12px;object-fit:cover;border:1px solid var(--ifood-border)}
-        .sidebar{position:sticky;top:84px}
-        .menu-card{border:1px solid var(--ifood-border);box-shadow:0 2px 10px rgba(0,0,0,.04)}
-        .menu-card img{aspect-ratio:4/3;object-fit:cover}
-        .section-title{scroll-margin-top:100px}
-        .price{font-weight:700}
-        .footer{border-top:1px solid var(--ifood-border);background:#fff}
-        .filter-pill{border-radius:999px;border:1px solid var(--ifood-border);padding:.35rem .7rem;background:#fff}
-        .filter-pill.active{background:#ffe9eb;border-color:var(--ifood-red);color:var(--ifood-red);font-weight:700}
-    </style>
-</head>
-<body data-biz-whatsapp="{{ $business['whatsapp'] ?? '' }}">
+    <link href="{{ asset('css/catalog-overrides.css') }}" rel="stylesheet">
+    <link href="/css/brand-bootstrap-overrides.css" rel="stylesheet">
 
+
+</head>
+<body>
+
+{{-- NAV --}}
 <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container">
-        <a class="navbar-brand d-flex align-items-center" href="{{ route('web.home') }}">
-            <span class="logo-mark">FOOOD</span>
+        <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
+            <img src="{{ asset('img/img.png') }}" class="img-fluid" style="
+    max-width: 50%; border-radius: 20px " alt="FOOOD">
         </a>
         <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navMain"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navMain">
-            <form class="d-none d-lg-flex ms-3 flex-grow-1" role="search" action="{{ route('web.home') }}">
+            <form class="d-none d-lg-flex ms-3 flex-grow-1" role="search" action="{{ url('/') }}">
                 <div class="input-group">
                     <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
-                    <input class="form-control" type="search" placeholder="Buscar no catálogo" />
+                    <input class="form-control" type="search" placeholder="Buscar no catálogo" name="q" value="{{ request('q') }}"/>
                 </div>
             </form>
             <ul class="navbar-nav ms-lg-3 align-items-lg-center">
-                <li class="nav-item me-lg-2"><a class="nav-link" href="#">Entrar</a></li>
-                <li class="nav-item"><a class="btn btn-primary" href="#">Cadastrar meu negócio</a></li>
+                <li class="nav-item"><a class="btn btn-primary" href="{{route('landing')}}">Cadastrar meu negócio</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
+{{-- HEADER DA LOJA --}}
 <div class="container mt-3">
     <div class="brand-card p-3 p-md-4 rounded-4">
         <div class="d-flex align-items-start gap-3 flex-wrap">
-            <img class="brand-logo" src="{{ $business['logo_url'] ?? 'https://via.placeholder.com/200x200?text=Logo' }}" alt="Logo {{ $business['name'] ?? '' }}">
+            <img class="brand-logo" src="https://placehold.co/200x200?text=Sua Logo" alt="Logo {{ $business['name'] ?? '' }}">
             <div class="flex-grow-1">
                 <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
                     <div>
                         <h1 class="h4 mb-1">{{ $business['name'] ?? 'Empresa' }}</h1>
                         <div class="text-muted small">
                             {{ ($business['items_count'] ?? 0) }} itens no cardápio
-                            @if(!empty($business['avg_rating']))
-                                • Nota média {{ number_format($business['avg_rating'],1,',','.') }}
-                            @endif
+                            @if(!empty($business['avg_rating'])) • Nota média {{ number_format($business['avg_rating'],1,',','.') }} @endif
                         </div>
                     </div>
                     <div class="d-flex flex-wrap gap-2">
-                        <a href="{{ route('web.home') }}" class="btn btn-outline-secondary">
+                        <a href="{{ url('/') }}" class="btn btn-outline-secondary">
                             <i class="bi bi-arrow-left"></i> Voltar ao catálogo
                         </a>
                         @if($waNumber)
@@ -101,7 +85,7 @@
 <main class="py-4">
     <div class="container">
         <div class="row g-4">
-            {{-- SIDEBAR --}}
+            {{-- SIDEBAR (opcional) --}}
             <aside class="col-lg-3">
                 <div class="sidebar">
                     <div class="card mb-3">
@@ -113,7 +97,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="card mb-3">
                         <div class="card-body">
                             <div class="mb-2 fw-semibold">Categorias</div>
@@ -168,7 +151,7 @@
                         @forelse($section['items'] as $it)
                             <div class="col">
                                 <div class="card menu-card h-100">
-                                    <img src="{{ $it['img'] ?? 'https://via.placeholder.com/600x400?text=Sem+imagem' }}"
+                                    <img src="{{ asset('img/img_1.png') }}"
                                          class="card-img-top" alt="{{ $it['name'] ?? 'Item' }}">
                                     <div class="card-body">
                                         <h3 class="h6 mb-1">{{ $it['name'] }}</h3>
@@ -177,20 +160,22 @@
                                         @endif
                                         <div class="d-flex align-items-center justify-content-between">
                                             <div class="price">{{ $fmt($it['price'] ?? 0) }}</div>
-                                            @if($waNumber)
-                                                <button
-                                                    class="btn btn-sm btn-outline-primary js-open-wa"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#waModal"
-                                                    data-item-id="{{ $it['id'] }}"
-                                                    data-item-name="{{ $it['name'] }}"
-                                                    data-item-price="{{ $fmt($it['price'] ?? 0) }}"
-                                                    data-price-cents="{{ (int) ($it['price'] ?? 0) }}"
-                                                >
-                                                    <i class="bi bi-plus-circle"></i> Adicionar
-                                                </button>
 
-                                            @endif
+                                            {{-- IMPORTANTE: loja e whatsapp por item (multi-loja) --}}
+                                            <button
+                                                class="btn btn-sm btn-outline-primary js-open-wa"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#waModal"
+                                                data-item-id="{{ $it['id'] }}"
+                                                data-item-name="{{ $it['name'] }}"
+                                                data-item-price="{{ $fmt($it['price'] ?? 0) }}"
+                                                data-price-cents="{{ (int) ($it['price'] ?? 0) }}"
+                                                data-store="{{ $business['name'] ?? 'Estabelecimento' }}"
+                                                data-wa="{{ preg_replace('/\D+/', '', $business['whatsapp'] ?? $waNumber) }}"
+                                            >
+                                                <i class="bi bi-plus-circle"></i> Adicionar
+                                            </button>
+
                                         </div>
                                     </div>
                                 </div>
@@ -200,9 +185,7 @@
                         @endforelse
                     </div>
                 @empty
-                    <div class="alert alert-light border">
-                        Este estabelecimento ainda não cadastrou itens no cardápio.
-                    </div>
+                    <div class="alert alert-light border">Este estabelecimento ainda não cadastrou itens no cardápio.</div>
                 @endforelse
             </section>
         </div>
@@ -211,7 +194,7 @@
 
 <footer class="footer py-4">
     <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
-        <span class="text-muted small">© 2025 Catálogo</span>
+        <span class="text-muted small">V-Ribiera Food</span>
         <ul class="nav small">
             <li class="nav-item"><a class="nav-link text-muted" href="#">Termos</a></li>
             <li class="nav-item"><a class="nav-link text-muted" href="#">Privacidade</a></li>
@@ -220,8 +203,8 @@
     </div>
 </footer>
 
-{{-- MODAL WHATSAPP (único, reusado para todos os itens) --}}
-<div class="modal fade" id="waModal" tabindex="-1">
+{{-- MODAL ADICIONAR --}}
+<div class="modal fade" id="waModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -247,123 +230,14 @@
     </div>
 </div>
 
-@push('scripts')
-    <script src="{{ asset('js/business-cart.js') }}"></script>
-@endpush
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    (function(){
-        const $root     = document.body;
-        const waNumber  = $root.dataset.wa || "";
-        const $sections = document.getElementById('menuSections');
-
-        // ====== FILTROS (front-only) ======
-        const getCards = () => [...$sections.querySelectorAll('.menu-card')];
-
-        function applyMenuFilters(){
-            const q     = (document.getElementById('menuSearch').value||'').trim().toLowerCase();
-            const pMin  = parseFloat((document.getElementById('priceMin').value||'').replace(',','.'));
-            const pMax  = parseFloat((document.getElementById('priceMax').value||'').replace(',','.'));
-            const sort  = document.getElementById('menuSort').value;
-            const tags  = [...document.querySelectorAll('.filter-pill.active')].map(b=>b.dataset.tag);
-
-            getCards().forEach(card=>{
-                const title = (card.querySelector('.h6')?.textContent || '').toLowerCase();
-                const desc  = (card.querySelector('.text-muted')?.textContent || '').toLowerCase();
-                const priceText = card.querySelector('.price')?.textContent || 'R$ 0,00';
-                const price = parseFloat(priceText.replace(/[R$\s.]/g,'').replace(',','.')) || 0;
-
-                let ok = true;
-                if (q) ok = title.includes(q) || desc.includes(q);
-                if (ok && !Number.isNaN(pMin)) ok = price >= pMin;
-                if (ok && !Number.isNaN(pMax)) ok = price <= pMax;
-                if (ok && tags.length) {
-                    // se quiser tags reais, inclua em data-attributes no card
-                    ok = true;
-                }
-                card.closest('.col').style.display = ok ? '' : 'none';
-            });
-
-            if (sort) {
-                const rows = [...$sections.querySelectorAll('.row')];
-                rows.forEach(row=>{
-                    const cols = [...row.children];
-                    cols.sort((a,b)=>{
-                        const ca=a.querySelector('.menu-card'), cb=b.querySelector('.menu-card');
-                        if (!ca || !cb) return 0;
-                        const ta=(ca.querySelector('.h6')?.textContent || '').toLowerCase();
-                        const tb=(cb.querySelector('.h6')?.textContent || '').toLowerCase();
-                        const pa=parseFloat((ca.querySelector('.price')?.textContent||'').replace(/[R$\s.]/g,'').replace(',','.'))||0;
-                        const pb=parseFloat((cb.querySelector('.price')?.textContent||'').replace(/[R$\s.]/g,'').replace(',','.'))||0;
-                        if (sort==='price-asc')  return pa-pb;
-                        if (sort==='price-desc') return pb-pa;
-                        if (sort==='az') return ta>tb?1:-1;
-                        return 0;
-                    });
-                    cols.forEach(c=>row.appendChild(c));
-                });
-            }
-        }
-
-        document.getElementById('applyFilters')?.addEventListener('click', applyMenuFilters);
-        document.getElementById('clearFilters')?.addEventListener('click', ()=>{
-            document.getElementById('menuSearch').value='';
-            document.getElementById('priceMin').value='';
-            document.getElementById('priceMax').value='';
-            document.getElementById('menuSort').value='';
-            document.querySelectorAll('.filter-pill.active').forEach(b=>b.classList.remove('active'));
-            applyMenuFilters();
-        });
-        document.querySelectorAll('.filter-pill').forEach(b=>{
-            b.addEventListener('click', ()=> b.classList.toggle('active'));
-        });
-        document.getElementById('menuSearch')?.addEventListener('input', applyMenuFilters);
-
-        // ====== MODAL WHATSAPP ======
-        const waModal     = document.getElementById('waModal');
-        const waItemName  = document.getElementById('waItemName');
-        const waItemPrice = document.getElementById('waItemPrice');
-        const waQty       = document.getElementById('waQty');
-        const waObs       = document.getElementById('waObs');
-        const waSendBtn   = document.getElementById('waSendBtn');
-
-        // Preenche modal quando clica no botão "Pedir"
-        document.querySelectorAll('.js-open-wa').forEach(btn=>{
-            btn.addEventListener('click', ()=>{
-                const name  = btn.dataset.itemName || 'Item';
-                const price = btn.dataset.itemPrice || '';
-                waItemName.textContent  = name;
-                waItemPrice.textContent = price ? `• ${price}` : '';
-                waQty.value = 1;
-                waObs.value = '';
-                // prepara link final quando o modal é aberto
-                const updateHref = ()=>{
-                    const qty = Math.max(1, parseInt(waQty.value||'1',10));
-                    const obs = waObs.value?.trim() || '-';
-                    const text = `Olá! Quero fazer um pedido:%0A%0A• Item: ${encodeURIComponent(name)}%0A• Quantidade: ${qty}%0A• Observações: ${encodeURIComponent(obs)}%0A%0A(Enviado via catálogo)`;
-                    const href = waNumber ? `https://wa.me/${waNumber}?text=${text}` : '#';
-                    waSendBtn.href = href;
-                };
-                updateHref();
-                waQty.addEventListener('input', updateHref, { once:false });
-                waObs.addEventListener('input', updateHref, { once:false });
-            });
-        });
-
-        // primeira aplicação dos filtros
-        applyMenuFilters();
-    })();
-</script>
-
-<!-- CART FAB -->
-<button id="cartFab" class="btn btn-danger position-fixed"
-        style="right:16px; bottom:16px; z-index:1050; border-radius:999px; box-shadow:0 6px 24px rgba(0,0,0,.2)">
+{{-- FAB --}}
+<button id="cartFab" class="btn  position-fixed"
+        data-bs-toggle="offcanvas" data-bs-target="#cartDrawer" aria-controls="cartDrawer"
+        style="right:16px; bottom:16px; z-index:1050;">
     <i class="bi bi-bag"></i> <span class="ms-1" id="cartFabCount">0</span>
 </button>
 
-<!-- CART DRAWER -->
+{{-- OFFCANVAS CARRINHO --}}
 <div class="offcanvas offcanvas-end" tabindex="-1" id="cartDrawer">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title">Seu pedido</h5>
@@ -381,15 +255,236 @@
                 <label class="form-label small">Observações gerais</label>
                 <textarea id="cartObs" class="form-control" rows="2" placeholder="Ex.: tirar cebola, ponto da carne..."></textarea>
             </div>
-            <button id="cartClear" class="btn btn-outline-secondary w-100 mb-2">
-                <i class="bi bi-trash"></i> Limpar carrinho
-            </button>
+
+            {{-- quando for multi-loja, JS injeta os botões aqui acima --}}
             <a id="cartCheckout" href="#" target="_blank" class="btn btn-success w-100">
                 <i class="bi bi-whatsapp"></i> Finalizar no WhatsApp
             </a>
+
+            <button id="cartClear" class="btn btn-outline-secondary w-100 mt-2">
+                <i class="bi bi-trash"></i> Limpar carrinho
+            </button>
         </div>
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    (function(){
+        // ========= Helpers =========
+        const $  = (s,ctx=document)=>ctx.querySelector(s);
+        const $$ = (s,ctx=document)=>Array.from(ctx.querySelectorAll(s));
+        const fmtBRL = v => (Number(v||0)/100).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+        const esc = s => (s||'').replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#39;' }[m]));
+
+        // ========= Filtros simples (buscar/ordenar por preço/nome) =========
+        const sectionsEl = document.getElementById('menuSections');
+        function getCards(){ return $$('.menu-card', sectionsEl).map(c=>c.closest('.col')); }
+        function applyMenuFilters(){
+            const q = ($('#menuSearch')?.value||'').trim().toLowerCase();
+            getCards().forEach(col=>{
+                const card = $('.menu-card', col);
+                const title = (card.querySelector('.h6')?.textContent || '').toLowerCase();
+                const desc  = (card.querySelector('.text-muted')?.textContent || '').toLowerCase();
+                const ok = !q || title.includes(q) || desc.includes(q);
+                col.style.display = ok ? '' : 'none';
+            });
+        }
+        $('#menuSearch')?.addEventListener('input', applyMenuFilters);
+
+        // ========= Carrinho multi-loja =========
+        const els = {
+            list:     $('#cartItems'),
+            total:    $('#cartTotal'),
+            fabCount: $('#cartFabCount'),
+            clear:    $('#cartClear'),
+            obs:      $('#cartObs'),
+            checkout: $('#cartCheckout'),
+            drawer:   $('#cartDrawer')
+        };
+
+        // container onde os botões por loja serão inseridos (antes do botão único)
+        let multiWrap = document.getElementById('cartCheckoutMulti');
+        if (!multiWrap) {
+            multiWrap = document.createElement('div');
+            multiWrap.id = 'cartCheckoutMulti';
+            multiWrap.className = 'd-grid gap-2';
+            els.checkout?.parentNode?.insertBefore(multiWrap, els.checkout);
+        }
+
+        function getGlobalWa(){
+            const meta = document.querySelector('meta[name="wa-number"]')?.content || '';
+            return String(meta).replace(/\D+/g,'');
+        }
+
+        const STORAGE_KEY = 'simpleCartMulti';
+        const cart = {
+            // item: {id,name,priceCents,qty,obs, store, wa}
+            items: [],
+            load(){ try{ this.items = JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]'); } catch{ this.items=[]; } },
+            save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(this.items)); },
+            add(it){
+                const k = this.items.findIndex(x =>
+                    x.id===it.id && (x.obs||'')===(it.obs||'') && (x.wa||'')===(it.wa||''));
+                if (k>=0) this.items[k].qty += it.qty; else this.items.push(it);
+                this.save(); render(); openDrawer();
+            },
+            remove(i){ this.items.splice(i,1); this.save(); render(); },
+            clear(){ this.items=[]; this.save(); render(); },
+            totalAll(){ return this.items.reduce((s,i)=>s + i.priceCents*i.qty, 0); },
+            count(){ return this.items.reduce((s,i)=>s + i.qty, 0); },
+            groups(){
+                const map = new Map();
+                for (const it of this.items) {
+                    const key = (it.wa && it.wa.length) ? `wa:${it.wa}` : `store:${it.store||'Sem loja'}`;
+                    if (!map.has(key)) map.set(key, { wa: it.wa||'', store: it.store||'Sem loja', items: [], subtotal:0 });
+                    const g = map.get(key);
+                    g.items.push(it);
+                    g.subtotal += it.priceCents * it.qty;
+                }
+                return Array.from(map.values());
+            }
+        };
+
+        function render(){
+            const groups = cart.groups();
+
+            els.list.innerHTML = groups.length
+                ? groups.map(g => `
+        <div class="mb-3">
+          <div class="fw-bold mb-1">${esc(g.store)}</div>
+          ${g.items.map(it=>`
+            <div class="d-flex align-items-start justify-content-between border rounded p-2 mb-2">
+              <div class="me-2">
+                <div class="fw-semibold">${esc(it.name)} <span class="text-muted">× ${it.qty}</span></div>
+                <div class="small text-muted">${fmtBRL(it.priceCents)} cada${it.obs?` • ${esc(it.obs)}`:''}</div>
+              </div>
+              <div class="text-end">
+                <div class="fw-bold">${fmtBRL(it.priceCents*it.qty)}</div>
+                <button class="btn btn-sm btn-outline-secondary mt-1" data-remove-index="${cart.items.indexOf(it)}">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </div>
+          `).join('')}
+          <div class="d-flex justify-content-between small text-muted">
+            <span>Subtotal</span><span>${fmtBRL(g.subtotal)}</span>
+          </div>
+        </div>
+      `).join('')
+                : '<div class="text-center text-muted py-3">Seu carrinho está vazio.</div>';
+
+            // remover
+            els.list.querySelectorAll('[data-remove-index]').forEach(b=>{
+                b.addEventListener('click', e=>{
+                    const i = parseInt(e.currentTarget.getAttribute('data-remove-index'),10);
+                    cart.remove(i);
+                });
+            });
+
+            // total geral + contador
+            els.total.textContent = fmtBRL(cart.totalAll());
+            if (els.fabCount) els.fabCount.textContent = String(cart.count());
+
+            updateCheckoutButtons(groups);
+        }
+
+        function updateCheckoutButtons(groups){
+            if (groups.length <= 1) {
+                multiWrap.innerHTML = '';
+                els.checkout?.classList.remove('d-none');
+
+                const g = groups[0];
+                const wa = (g && g.wa) ? g.wa : getGlobalWa();
+                const href = buildWaHref(g ? g.items : cart.items, g ? g.store : (cart.items[0]?.store||'Loja'), wa);
+                const disabled = (!wa || (g ? g.items.length===0 : cart.items.length===0));
+
+                els.checkout?.classList.toggle('disabled', disabled);
+                els.checkout?.setAttribute('aria-disabled', disabled ? 'true' : 'false');
+                els.checkout?.setAttribute('href', disabled ? '#' : href);
+                return;
+            }
+
+            // várias lojas: cria 1 botão por loja
+            els.checkout?.classList.add('d-none');
+            multiWrap.innerHTML = groups.map(g=>{
+                const wa = g.wa || getGlobalWa();
+                const href = buildWaHref(g.items, g.store, wa);
+                const disabled = !wa || g.items.length===0;
+                const classes = `btn btn-success w-100 ${disabled?'disabled':''}`;
+                const attr = disabled ? 'aria-disabled="true" href="#"' : `href="${href}" target="_blank"`;
+                return `<a ${attr} class="${classes}"><i class="bi bi-whatsapp"></i> Finalizar na ${esc(g.store)}</a>`;
+            }).join('');
+        }
+
+        function buildWaHref(items, storeName, wa){
+            const lines = items.map(i => `• ${i.name} x ${i.qty} — ${fmtBRL(i.priceCents)}`);
+            const total = fmtBRL(items.reduce((s,i)=>s + i.priceCents*i.qty, 0));
+            const obs   = (els.obs?.value || '').trim() || '-';
+            const txt =
+                `Olá! Pedido para ${storeName}:%0A%0A${encodeURIComponent(lines.join('\n'))}%0A%0A`+
+                `Subtotal: ${encodeURIComponent(total)}%0A`+
+                `Observações: ${encodeURIComponent(obs)}%0A%0A(Enviado via catálogo)`;
+            const number = String(wa||'').replace(/\D+/g,'');
+            return number ? `https://wa.me/${number}?text=${txt}` : '#';
+        }
+
+        function openDrawer(){
+            const oc = bootstrap.Offcanvas.getOrCreateInstance(els.drawer);
+            oc.show();
+        }
+
+        // ========= Modal (preenche e adiciona com loja/wa) =========
+        const waModal   = $('#waModal');
+        const waTitle   = $('#waTitle');
+        const waQty     = $('#waQty');
+        const waObs     = $('#waObs');
+        const waAddCart = $('#waAddCart');
+
+        $$('.js-open-wa').forEach(btn=>{
+            btn.addEventListener('click', ()=>{
+                const name  = btn.dataset.itemName  || 'Item';
+                const price = btn.dataset.itemPrice || '';
+                const pc    = parseInt(btn.dataset.priceCents || '0', 10);
+                const wa    = (btn.dataset.wa || getGlobalWa()).replace(/\D+/g,'');
+                const store = btn.dataset.store || 'Estabelecimento';
+
+                waTitle.textContent = price ? `Adicionar: ${name} — ${price}` : `Adicionar: ${name}`;
+                waQty.value = 1; waObs.value = '';
+
+                waAddCart.dataset.itemId = btn.dataset.itemId || Math.random().toString(36).slice(2);
+                waAddCart.dataset.itemName = name;
+                waAddCart.dataset.priceCents = String(pc);
+                waAddCart.dataset.wa = wa;
+                waAddCart.dataset.store = store;
+            });
+        });
+
+        waAddCart?.addEventListener('click', ()=>{
+            const id    = waAddCart.dataset.itemId;
+            const name  = waAddCart.dataset.itemName || 'Item';
+            const pc    = parseInt(waAddCart.dataset.priceCents || '0',10);
+            const qty   = Math.max(1, parseInt(waQty.value||'1',10));
+            const obs   = (waObs.value||'').trim();
+            const wa    = waAddCart.dataset.wa || '';
+            const store = waAddCart.dataset.store || 'Estabelecimento';
+
+            cart.add({ id, name, priceCents: pc, qty, obs, wa, store });
+
+            const m = bootstrap.Modal.getInstance(waModal);
+            m?.hide();
+        });
+
+        // extras
+        els.clear?.addEventListener('click', e=>{ e.preventDefault(); cart.clear(); });
+        els.obs?.addEventListener('input', ()=> render());
+
+        // init
+        cart.load();
+        render();
+        applyMenuFilters();
+    })();
+</script>
 </body>
 </html>

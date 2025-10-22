@@ -16,9 +16,7 @@ class User extends Authenticatable
 
     public function businesses()
     {
-        return $this->belongsToMany(\App\Models\Business::class, 'business_user')
-            ->withPivot('role')
-            ->withTimestamps();
+        return $this->hasOne(Business::class, 'user_id');
     }
 
 

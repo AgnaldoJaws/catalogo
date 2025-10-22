@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
 use App\Services\Contracts\{
     DirectoryServiceInterface,
