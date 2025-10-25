@@ -126,7 +126,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="adminNav">
-            <ul class="navbar-nav ms-auto align-items-lg-center d-none d-lg-flex">
+            <ul class="navbar-nav ms-auto align-items-lg-center">
                 <li class="nav-item">
                     <a class="nav-link {{ $is('admin.profile.*') }}" href="{{ route('admin.profile.edit') }}">
                         <i class="bi bi-person-circle me-1" aria-hidden="true"></i> Perfil
@@ -143,6 +143,8 @@
                         <i class="bi bi-list-ul me-1" aria-hidden="true"></i> Cardápio
                     </a>
                 </li>
+
+                {{-- BOTÃO SITE --}}
                 <li class="nav-item ms-2">
                     <a class="btn btn-outline-secondary btn-sm"
                        href="{{ $biz?->slug ? route('web.business.show', $biz->slug) : route('web.home') }}"
@@ -151,10 +153,21 @@
                         <i class="bi bi-house"></i> Site
                     </a>
                 </li>
+
+                {{-- BOTÃO SAIR --}}
+                <li class="nav-item ms-2">
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-outline-danger btn-sm d-flex align-items-center">
+                            <i class="bi bi-box-arrow-right me-1"></i> Sair
+                        </button>
+                    </form>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
+
 
 {{-- Tabs fixas no mobile --}}
 <nav class="mobile-tabs d-lg-none" role="navigation" aria-label="Menu inferior">

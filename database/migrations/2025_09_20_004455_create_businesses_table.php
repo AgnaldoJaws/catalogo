@@ -9,8 +9,8 @@ return new class extends Migration {
         Schema::create('businesses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('name');
-            $table->string('slug')->unique();
+            $table->string('name')->nullable();
+            $table->string('slug')->nullable()->unique();
             $table->string('logo_url')->nullable();
             $table->text('about')->nullable();
             $table->decimal('avg_rating', 2, 1)->default(0);

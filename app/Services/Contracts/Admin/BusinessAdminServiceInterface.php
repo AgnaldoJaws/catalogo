@@ -22,4 +22,7 @@ interface BusinessAdminServiceInterface
     public function createItem(int $sectionId, array $data): int;
     public function updateItem(int $itemId, array $data): void;
     public function deleteItem(int $itemId): void;
+
+    public function findLocationOrFail(int $businessId, int $locationId);
+    public function setLocationStatus(int $businessId, int $locationId, int $status): void;
 }

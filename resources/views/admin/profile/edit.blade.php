@@ -26,7 +26,6 @@
                     <label class="form-label">Logo</label>
                     <input type="file" name="logo_file" class="form-control" accept="image/*">
                 </div>
-
             </div>
 
             <div class="mb-3">
@@ -36,24 +35,29 @@
 
             <div class="mb-3">
                 <label class="form-label">WhatsApp (com DDI/DD)</label>
-                <input name="whatsapp" class="form-control" value="{{ old('whatsapp',$biz->whatsapp) }}">
+                <input name="whatsapp" id="whatsapp" class="form-control" value="{{ old('whatsapp',$biz->whatsapp) }}">
             </div>
+
+{{--            <div class="mb-3">--}}
+{{--                <label class="form-label">Site</label>--}}
+{{--                <input name="website" class="form-control" value="{{ old('website',$biz->website) }}" placeholder="https://seudominio.com.br">--}}
+{{--            </div>--}}
 
             <div class="mb-3">
                 <label class="form-label">Sobre</label>
                 <textarea name="about" class="form-control" rows="4">{{ old('about',$biz->about) }}</textarea>
             </div>
 
-            <div class="row g-3">
-                <div class="col-md-6">
-                    <label class="form-label">Instagram</label>
-                    <input name="instagram" class="form-control" value="{{ old('instagram',$biz->instagram) }}">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">Facebook</label>
-                    <input name="facebook" class="form-control" value="{{ old('facebook',$biz->facebook) }}">
-                </div>
-            </div>
+{{--            <div class="row g-3">--}}
+{{--                <div class="col-md-6">--}}
+{{--                    <label class="form-label">Instagram</label>--}}
+{{--                    <input name="instagram" class="form-control" value="{{ old('instagram',$biz->instagram) }}">--}}
+{{--                </div>--}}
+{{--                <div class="col-md-6">--}}
+{{--                    <label class="form-label">Facebook</label>--}}
+{{--                    <input name="facebook" class="form-control" value="{{ old('facebook',$biz->facebook) }}">--}}
+{{--                </div>--}}
+{{--            </div>--}}
         </div>
 
         <div class="card-footer text-end">
@@ -61,3 +65,5 @@
         </div>
     </form>
 @endsection
+
+

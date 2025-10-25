@@ -36,10 +36,10 @@
                     </div>
 
                     <div class="row g-2 mt-2">
-                        <div class="col">
-                            <label class="form-label">Telefone</label>
-                            <input name="phone" id="phone" class="form-control">
-                        </div>
+{{--                        <div class="col">--}}
+{{--                            <label class="form-label">Telefone</label>--}}
+{{--                            <input name="phone" id="phone" class="form-control">--}}
+{{--                        </div>--}}
                         <div class="col">
                             <label class="form-label">WhatsApp</label>
                             <input name="whatsapp" id="whatsapp" class="form-control">
@@ -69,32 +69,32 @@
                         <table class="table table-sm align-middle">
                             <thead>
                             <tr>
-                                <th>ID</th><th>Cidade</th><th>Endereço</th><th>Status</th><th class="text-end">Ações</th>
+                               <th>Cidade</th><th>Endereço</th><th>Status</th><th class="text-end">Ações</th>
                             </tr>
                             </thead>
                             <tbody>
                             @forelse($locations as $loc)
                                 <tr id="row-{{ $loc['id'] }}">
-                                    <td>{{ $loc['id'] }}</td>
-                                    <td>{{ $citiesMap[$loc['city_id']] ?? $loc['city_id'] }}</td>
+                                    <td>{{ $loc['city']['name'] }}</td>
                                     <td>{{ $loc['address'] }}</td>
                                     <td>
-                  <span class="badge {{ $loc['status'] ? 'bg-success' : 'bg-secondary' }}">
-                    {{ $loc['status'] ? 'Aberto':'Fechado' }}
-                  </span>
+                                        <span class="badge {{ $loc['status'] ? 'bg-success' : 'bg-secondary' }}">
+                                            {{ $loc['status'] ? 'Aberto':'Fechado' }}
+                                        </span>
                                     </td>
                                     <td class="text-end">
-                                        <button
-                                            class="btn btn-sm btn-outline-primary me-2 btn-edit"
-                                            data-id="{{ $loc['id'] }}"
-                                            data-city_id="{{ $loc['city_id'] }}"
-                                            data-address="{{ $loc['address'] }}"
-                                            data-lat="{{ $loc['lat'] }}"
-                                            data-lng="{{ $loc['lng'] }}"
-                                            data-phone="{{ $loc['phone'] }}"
-                                            data-whatsapp="{{ $loc['whatsapp'] }}"
-                                            data-status="{{ (int)$loc['status'] }}"
-                                        >Editar</button>
+{{--                                        <button--}}
+{{--                                            class="btn btn-sm btn-outline-primary me-2 btn-edit"--}}
+{{--                                            data-id="{{ $loc['id'] }}"--}}
+{{--                                        >Editar</button>--}}
+
+                                        <form method="post" action="{{ route('admin.locations.status',['location'=>$loc['id']]) }}" class="d-inline">
+                                            @csrf
+                                            <input type="hidden" name="status" value="{{ $loc['status'] ? 0 : 1 }}">
+                                            <button class="btn btn-sm {{ $loc['status'] ? 'btn-outline-secondary' : 'btn-outline-success' }}">
+                                                {{ $loc['status'] ? 'Fechar loja' : 'Abrir loja' }}
+                                            </button>
+                                        </form>
 
                                         <form method="post" action="{{ route('admin.locations.destroy',['business'=>$biz->id,'location'=>$loc['id']]) }}" class="d-inline">
                                             @csrf @method('delete')
@@ -108,57 +108,127 @@
                             </tbody>
                         </table>
                     </div>
-
-                    {{-- (Opcional) Toggle rápido de status via post para o mesmo upsert --}}
-                    {{-- <form method="post" action="{{ route('admin.locations.store',['business'=>$biz->id]) }}">@csrf
-                        <input type="hidden" name="id" value="{{ $loc['id'] }}">
-                        <input type="hidden" name="city_id" value="{{ $loc['city_id'] }}">
-                        <input type="hidden" name="address" value="{{ $loc['address'] }}">
-                        <input type="hidden" name="status" value="{{ $loc['status']?0:1 }}">
-                        <button class="btn btn-sm btn-outline-secondary">Abrir/Fechar</button>
-                    </form> --}}
                 </div>
             </div>
         </div>
     </div>
 
-    @section('scripts')
-        <script>
-            const form = document.getElementById('location-form');
-            const saveBtn = document.getElementById('save-btn');
-            const cancelBtn = document.getElementById('cancel-edit');
+    {{-- Offcanvas de Edição --}}
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="editLocationCanvas" aria-labelledby="editLocationCanvasLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="editLocationCanvasLabel">Editar local</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <form method="post" action="{{ route('admin.locations.store',['business'=>$biz->id]) }}">
+                @csrf
+                <input type="hidden" name="id" id="e-id">
 
-            function fillForm(data) {
-                document.getElementById('loc-id').value   = data.id || '';
-                document.getElementById('city_id').value  = data.city_id || '';
-                document.getElementById('address').value  = data.address || '';
-                document.getElementById('lat').value      = data.lat || '';
-                document.getElementById('lng').value      = data.lng || '';
-                document.getElementById('phone').value    = data.phone || '';
-                document.getElementById('whatsapp').value = data.whatsapp || '';
-                document.getElementById('status').value   = (data.status ?? 1);
-                const editing = !!data.id;
-                saveBtn.textContent = editing ? 'Salvar alterações' : 'Salvar local';
-                cancelBtn.classList.toggle('d-none', !editing);
+                <div class="mb-2">
+                    <label class="form-label">Cidade</label>
+                    <select name="city_id" id="e-city_id" class="form-select" required>
+                        <option value="">Selecione...</option>
+                        @foreach($cities as $c)
+                            <option value="{{ $c->id }}">{{ $c->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mb-2">
+                    <label class="form-label">Endereço</label>
+                    <input name="address" id="e-address" class="form-control" required>
+                </div>
+
+                <div class="row g-2">
+                    <div class="col">
+                        <label class="form-label">Lat</label>
+                        <input name="lat" id="e-lat" class="form-control" inputmode="decimal">
+                    </div>
+                    <div class="col">
+                        <label class="form-label">Lng</label>
+                        <input name="lng" id="e-lng" class="form-control" inputmode="decimal">
+                    </div>
+                </div>
+
+                <div class="row g-2 mt-2">
+{{--                    <div class="col">--}}
+{{--                        <label class="form-label">Telefone</label>--}}
+{{--                        <input name="phone" id="e-phone" class="form-control">--}}
+{{--                    </div>--}}
+                    <div class="col">
+                        <label class="form-label">WhatsApp</label>
+                        <input name="whatsapp" id="e-whatsapp" class="form-control">
+                    </div>
+                </div>
+
+                <div class="mt-2">
+                    <label class="form-label">Status</label>
+                    <select name="status" id="e-status" class="form-select" required>
+                        <option value="1">Aberto</option>
+                        <option value="0">Fechado</option>
+                    </select>
+                </div>
+
+                <div class="mt-3 d-flex gap-2">
+                    <button class="btn btn-primary">Salvar</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+@endsection
+
+@section('scripts')
+    <script>
+        (function(){
+            const offcanvasEl = document.getElementById('editLocationCanvas');
+            let offcanvasInstance;
+
+            function ensureOffcanvas() {
+                if (!offcanvasInstance) {
+                    offcanvasInstance = new bootstrap.Offcanvas(offcanvasEl);
+                }
+                return offcanvasInstance;
             }
 
-            document.querySelectorAll('.btn-edit').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    fillForm({
-                        id: btn.dataset.id,
-                        city_id: btn.dataset.city_id,
-                        address: btn.dataset.address,
-                        lat: btn.dataset.lat,
-                        lng: btn.dataset.lng,
-                        phone: btn.dataset.phone,
-                        whatsapp: btn.dataset.whatsapp,
-                        status: btn.dataset.status
-                    });
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                });
+            document.addEventListener('click', async function(e){
+                const btn = e.target.closest('.btn-edit');
+                if(!btn) return;
+
+                const id = btn.dataset.id;
+                const url = "{{ route('admin.locations.show',['location'=>'__ID__']) }}".replace('__ID__', id);
+
+                try {
+                    const rsp = await fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' }});
+                    if (!rsp.ok) throw new Error('Falha ao carregar local');
+                    const data = await rsp.json();
+
+                    document.getElementById('e-id').value        = data.id ?? '';
+                    document.getElementById('e-city_id').value   = data.city_id ?? '';
+                    document.getElementById('e-address').value   = data.address ?? '';
+                    document.getElementById('e-lat').value       = data.lat ?? '';
+                    document.getElementById('e-lng').value       = data.lng ?? '';
+                    document.getElementById('e-phone').value     = data.phone ?? '';
+                    document.getElementById('e-whatsapp').value  = data.whatsapp ?? '';
+                    document.getElementById('e-status').value    = (data.status ?? 1);
+
+                    ensureOffcanvas().show();
+                } catch (err) {
+                    alert(err.message || 'Erro ao carregar dados do local');
+                }
             });
 
-            cancelBtn?.addEventListener('click', () => fillForm({}));
-        </script>
-    @endsection
+            const cancelBtn = document.getElementById('cancel-edit');
+            cancelBtn?.addEventListener('click', () => {
+                document.getElementById('loc-id').value = '';
+                document.getElementById('city_id').value = '';
+                document.getElementById('address').value = '';
+                document.getElementById('lat').value = '';
+                document.getElementById('lng').value = '';
+                document.getElementById('phone').value = '';
+                document.getElementById('whatsapp').value = '';
+                document.getElementById('status').value = '1';
+            });
+        })();
+    </script>
 @endsection

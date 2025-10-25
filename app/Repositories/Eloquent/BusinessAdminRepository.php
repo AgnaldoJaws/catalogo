@@ -16,6 +16,7 @@ class BusinessAdminRepository implements BusinessAdminRepositoryInterface
 
         $biz->fill([
             'name'      => $data['name']      ?? $biz->name,
+            'slug'      => $data['slug']      ?? $biz->slug,
             'about'     => $data['about']     ?? $biz->about,
             'whatsapp'  => $data['whatsapp']  ?? $biz->whatsapp,
             'instagram' => $data['instagram'] ?? $biz->instagram,
@@ -23,9 +24,8 @@ class BusinessAdminRepository implements BusinessAdminRepositoryInterface
             'logo_url'  => $data['logo_url']  ?? $biz->logo_url,
         ]);
 
-        if (!empty($data['logo_path'])) {     // veio upload
+        if (!empty($data['logo_path'])) {
             $biz->logo_path = $data['logo_path'];
-            // opcional: $biz->logo_url = null;
         }
 
         return $biz->save();
@@ -163,4 +163,18 @@ class BusinessAdminRepository implements BusinessAdminRepositoryInterface
     public function deleteMenuItem(int $itemId): bool {
         return (bool) MenuItem::where('id',$itemId)->delete();
     }
+
+    public function findLocationOrFail(int $businessId, int $locationId)
+    {
+        return BusinessLocation::where('business_id', $businessId)
+            ->findOrFail($locationId);
+    }
+
+    public function setLocationStatus(int $businessId, int $locationId, int $status): void
+    {
+        BusinessLocation::where('business_id', $businessId)
+            ->where('id', $locationId)
+            ->update(['status' => (int)$status]);
+    }
+
 }
