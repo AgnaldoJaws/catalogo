@@ -10,54 +10,22 @@ class CategoriesSeeder extends Seeder
 {
     public function run(): void
     {
-        // Catálogo amplo para delivery de comida e bebida
         $cats = [
-            // 🍕 Pizzarias e Massas
-            ['Pizzas',                    '🍕'],
-            ['Massas & Molhos',           '🍝'],
-            ['Lasanhas & Assados',        '🥘'],
-
-            // 🍔 Lanches e Hamburguerias
-            ['Hambúrgueres Artesanais',   '🍔'],
-            ['Lanches & Sanduíches',      '🥪'],
-            ['Hot Dogs',                  '🌭'],
-            ['Porções & Acompanhamentos', '🍟'],
-
-            // 🍣 Cozinha Oriental
-            ['Sushi & Sashimi',           '🍣'],
-            ['Temakis',                   '🥢'],
-            ['Combos Orientais',          '🍱'],
-
-            // 🍛 Marmitas, Pratos e Comida Caseira
-            ['Pratos do Dia',             '🍛'],
-            ['Marmitas',                  '🥗'],
-            ['Comida Caseira',            '🍲'],
-            ['Churrasco & Grelhados',     '🥩'],
-
-            // ☕ Cafés, Doces e Padarias
-            ['Cafés & Bebidas Quentes',   '☕'],
-            ['Padaria & Confeitaria',     '🥐'],
-            ['Doces & Sobremesas',        '🍰'],
-            ['Açaí & Sorvetes',           '🍨'],
-
-            // 🥤 Bebidas
-            ['Refrigerantes & Sucos',     '🥤'],
-            ['Cervejas & Drinks',         '🍺'],
-            ['Águas & Naturais',          '💧'],
-
-            // 🍴 Categorias de Estabelecimentos
-            ['Pizzarias',                 '🏠'],
-            ['Hamburguerias',             '🍔'],
-            ['Lanchonetes',               '🥪'],
-            ['Sushi Bars',                '🍣'],
-            ['Marmitarias',               '🍱'],
-            ['Churrascarias',             '🔥'],
-            ['Cafeterias',                '☕'],
-            ['Padarias',                  '🥖'],
-            ['Docerias',                  '🧁'],
-            ['Açaíterias',                '🍇'],
-            ['Restaurantes',              '🍽️'],
-            ['Delivery em Geral',         '🚚'],
+            ['Pizzas',              '🍕'],
+            ['Lanches & Burgers',   '🍔'],
+            ['Marmitas & Pratos',   '🍛'],
+            ['Comida Caseira',      '🍲'],
+            ['Porções & Petiscos',  '🍟'],
+            ['Sushi & Temaki',      '🍣'],
+            ['Açaí & Sorvetes',     '🍨'],
+            ['Doces & Sobremesas',  '🍰'],
+            ['Padarias & Cafés',    '☕'],
+            ['Bebidas & Sucos',     '🥤'],
+            ['Cervejas & Drinks',   '🍺'],
+            ['Churrasco & Grelhados','🥩'],
+            ['Massas & Lasanhas',   '🍝'],
+            ['Saudável & Fitness',  '🥗'],
+            ['Delivery em Geral',   '🚚'],
         ];
 
         foreach ($cats as [$name, $emoji]) {

@@ -11,8 +11,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CitiesValeDoRibeiraSeeder::class,
             CategoriesSeeder::class,
-            DemoOwnersSeeder::class,
-            BusinessesBigSeedSeeder::class,
         ]);
     }
 }

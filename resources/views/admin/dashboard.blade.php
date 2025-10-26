@@ -25,8 +25,8 @@
                    class="big-tile text-decoration-none"
                    aria-label="Gerenciar locais de atendimento">
                     <i class="bi bi-geo-alt" aria-hidden="true"></i>
-                    <span class="title">Locais</span>
-                    <span class="desc">Endereços, WhatsApp e horários.</span>
+                    <span class="title">Endereço</span>
+                    <span class="desc">Endereços, WhatsApp, aberto/fechado.</span>
                 </a>
             </div>
 

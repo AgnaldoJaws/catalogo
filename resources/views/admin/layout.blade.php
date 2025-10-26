@@ -134,7 +134,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ $is('admin.locations.*') }}" href="{{ route('admin.locations.index') }}">
-                        <i class="bi bi-geo-alt me-1" aria-hidden="true"></i> Locais
+                        <i class="bi bi-geo-alt me-1" aria-hidden="true"></i> Endereço
                     </a>
                 </li>
                 <li class="nav-item">
@@ -177,7 +177,7 @@
     </a>
     <a href="{{ route('admin.locations.index') }}" class="{{ $on('admin.locations.*') }}">
         <i class="bi bi-geo-alt" aria-hidden="true"></i>
-        <span>Locais</span>
+        <span>Endereço</span>
     </a>
     <a href="{{ route('admin.menu.sections.index') }}" class="{{ $on(['admin.menu.sections.*','admin.menu.items.*']) }}">
         <i class="bi bi-list-ul" aria-hidden="true"></i>

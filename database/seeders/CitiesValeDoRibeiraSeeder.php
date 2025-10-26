@@ -11,9 +11,28 @@ class CitiesValeDoRibeiraSeeder extends Seeder
     public function run(): void
     {
         $cities = [
-            'Registro','Iguape','Cananéia','Ilha Comprida','Pariquera-Açu','Jacupiranga',
-            'Cajati','Eldorado','Sete Barras','Miracatu','Juquiá','Pedro de Toledo',
-            'Itariri','Barra do Turvo'
+            'Apiaí',
+            'Barra do Chapéu',
+            'Barra do Turvo',
+            'Cajati',
+            'Cananéia',
+            'Eldorado',
+            'Iguape',
+            'Ilha Comprida',
+            'Iporanga',
+            'Itaóca',
+            'Itapirapuã Paulista',
+            'Itariri',
+            'Jacupiranga',
+            'Juquiá',
+            'Juquitiba',
+            'Miracatu',
+            'Pariquera-Açu',
+            'Pedro de Toledo',
+            'Registro',
+            'Ribeira',
+            'São Lourenço da Serra',
+            'Sete Barras'
         ];
 
         foreach ($cities as $name) {
