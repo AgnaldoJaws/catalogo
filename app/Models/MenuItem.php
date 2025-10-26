@@ -26,7 +26,7 @@ class MenuItem extends Model
     protected $casts = [
         'price_cents'        => 'integer',
         'prep_time_minutes'  => 'integer',
-        'tags'               => 'array',   // requer coluna JSON
+        'tags'               => 'array',
         'is_available'       => 'boolean',
         'sort_order'         => 'integer',
     ];

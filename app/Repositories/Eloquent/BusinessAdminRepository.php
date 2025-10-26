@@ -131,38 +131,59 @@ class BusinessAdminRepository implements BusinessAdminRepositoryInterface
         if (empty($data['business_id'])) {
             throw new \InvalidArgumentException('business_id é obrigatório');
         }
+        if (empty($data['name'])) {
+            throw new \InvalidArgumentException('name é obrigatório');
+        }
+
+        $priceCents = 0;
+        if (array_key_exists('price_cents', $data)) {
+            $priceCents = (int) $data['price_cents'];
+        } elseif (array_key_exists('price', $data)) {
+            $priceCents = (int) round((float) str_replace(',', '.', $data['price']) * 100);
+        }
+
+        $tags = null;
+        if (array_key_exists('tags', $data)) {
+            $tags = is_string($data['tags'])
+                ? preg_split('/\s*,\s*/', trim($data['tags']), -1, PREG_SPLIT_NO_EMPTY)
+                : (array) $data['tags'];
+        }
 
         $payload = [
             'business_id'        => (int) $data['business_id'],
             'section_id'         => (int) $sectionId,
-            'name'               => $data['name'],
+            'business_loc_id'    => isset($data['business_loc_id']) ? (int) $data['business_loc_id'] : null,
+            'name'               => (string) $data['name'],
             'description'        => $data['description'] ?? null,
-            'price_cents'        => (int) ($data['price'] ?? 0),               // price -> price_cents
-            'image_url'          => $data['img_url'] ?? null,                  // img_url -> image_url
-            'image_path'         => $data['image_path'] ?? null,               // se veio upload
-            'is_available'       => array_key_exists('is_available',$data) ? (int) $data['is_available'] : 1,
-            'sort_order'         => (int) ($data['sort_order'] ?? 0),
-            'prep_time_minutes'  => (int) ($data['prep_min'] ?? 0),            // prep_min -> prep_time_minutes
-            'tags'               => $data['tags'] ?? null,                     // se coluna for JSON, mantenha array
+            'price_cents'        => $priceCents,
+            'image_url'          => $data['image_url'] ?? ($data['img_url'] ?? null),
+            'image_path'         => $data['image_path'] ?? null,
+            'is_available'       => array_key_exists('is_available', $data) ? (bool) $data['is_available'] : true,
+            'sort_order'         => isset($data['sort_order']) ? (int) $data['sort_order'] : 0,
+            'prep_time_minutes'  => isset($data['prep_time_minutes']) ? (int) $data['prep_time_minutes'] : (int) ($data['prep_min'] ?? 0),
+            'tags'               => $tags,
         ];
 
         $item = MenuItem::create($payload);
         return (int) $item->id;
     }
 
+
     public function updateMenuItem(int $itemId, array $data): bool
     {
         $it = MenuItem::findOrFail($itemId);
 
         $payload = [
-            'name'               => $data['name'] ?? $it->name,
-            'description'        => $data['description'] ?? $it->description,
-            'price_cents'        => array_key_exists('price',$data) ? (int) $data['price'] : $it->price_cents,
-            'image_url'          => array_key_exists('img_url',$data) ? $data['img_url'] : $it->image_url,
-            'is_available'       => array_key_exists('is_available',$data) ? (int) $data['is_available'] : $it->is_available,
-            'sort_order'         => array_key_exists('sort_order',$data) ? (int) $data['sort_order'] : $it->sort_order,
-            'prep_time_minutes'  => array_key_exists('prep_min',$data) ? (int) $data['prep_min'] : $it->prep_time_minutes,
-            'tags'               => array_key_exists('tags',$data) ? $data['tags'] : $it->tags,
+            'name'              => $data['name']              ?? $it->name,
+            'description'       => $data['description']       ?? $it->description,
+            'price_cents'       => array_key_exists('price_cents', $data)       ? (int) $data['price_cents']       : $it->price_cents,
+            'image_url'         => array_key_exists('image_url', $data)         ? $data['image_url']               : $it->image_url,
+            'is_available'      => array_key_exists('is_available', $data)      ? (bool) $data['is_available']     : $it->is_available,
+            'sort_order'        => array_key_exists('sort_order', $data)        ? (int) $data['sort_order']        : $it->sort_order,
+            'prep_time_minutes' => array_key_exists('prep_time_minutes', $data) ? (int) $data['prep_time_minutes'] : $it->prep_time_minutes,
+            'tags'              => array_key_exists('tags', $data)
+                ? (is_string($data['tags']) ? preg_split('/\s*,\s*/', trim($data['tags']), -1, PREG_SPLIT_NO_EMPTY) : $data['tags'])
+                : $it->tags,
         ];
 
         if (!empty($data['image_path'])) {
@@ -172,6 +193,7 @@ class BusinessAdminRepository implements BusinessAdminRepositoryInterface
         $it->fill($payload);
         return $it->save();
     }
+
 
     public function deleteMenuItem(int $itemId): bool {
         return (bool) MenuItem::where('id',$itemId)->delete();

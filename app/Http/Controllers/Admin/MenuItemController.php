@@ -25,6 +25,7 @@ class MenuItemController extends Controller
 
     public function store(Request $request,  int $section)
     {
+
         $business = Auth::user()->businesses->id;
         $biz = $this->svc->findOrFail($business);
         $this->authorize('manage', $biz);
@@ -58,7 +59,6 @@ class MenuItemController extends Controller
         if ($request->hasFile('image_file')) {
             $path = $request->file('image_file')->store('menu_items','public');
             $normalized['image_path'] = $path;
-            // opcional: $normalized['image_url'] = null;
         }
 
         $this->svc->createItem($section, $normalized);
@@ -68,6 +68,7 @@ class MenuItemController extends Controller
 
     public function update(Request $request, int $section, int $item)
     {
+
         $business = Auth::user()->businesses->id;
         $biz = $this->svc->findOrFail($business);
         $this->authorize('manage', $biz);
@@ -95,10 +96,10 @@ class MenuItemController extends Controller
             'tags'               => $this->csvToArray($data['tags'] ?? null),
         ];
 
+
         if ($request->hasFile('image_file')) {
             $path = $request->file('image_file')->store('menu_items','public');
             $normalized['image_path'] = $path;
-            // opcional: $normalized['image_url'] = null;
         }
 
         $this->svc->updateItem($item, $normalized);
