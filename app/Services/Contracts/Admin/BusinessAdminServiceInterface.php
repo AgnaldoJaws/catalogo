@@ -25,4 +25,8 @@ interface BusinessAdminServiceInterface
 
     public function findLocationOrFail(int $businessId, int $locationId);
     public function setLocationStatus(int $businessId, int $locationId, int $status): void;
+
+    public function getProfileData(int $businessId): array;
+
+    public function syncCategories(int $businessId, array $categoryIds = []): void;
 }

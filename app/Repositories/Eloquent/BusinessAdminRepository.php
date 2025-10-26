@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Eloquent;
 
-use App\Models\{Business, BusinessLocation, MenuItem, MenuSection};
+use App\Models\{Business, BusinessLocation, Category, MenuItem, MenuSection};
 use App\Repositories\Contracts\BusinessAdminRepositoryInterface;
 
 class BusinessAdminRepository implements BusinessAdminRepositoryInterface
@@ -11,7 +11,13 @@ class BusinessAdminRepository implements BusinessAdminRepositoryInterface
         return Business::withCount('items')->find($id);
     }
 
-    public function updateProfile(int $id, array $data): bool {
+    public function findWithRelations(int $id, array $relations = []): ?Business
+    {
+        return Business::with($relations)->withCount('items')->find($id);
+    }
+
+    public function updateProfile(int $id, array $data): bool
+    {
         $biz = Business::findOrFail($id);
 
         $biz->fill([
@@ -29,6 +35,13 @@ class BusinessAdminRepository implements BusinessAdminRepositoryInterface
         }
 
         return $biz->save();
+    }
+
+    public function syncCategories(int $businessId, array $categoryIds): void
+    {
+        $biz = Business::findOrFail($businessId);
+        $ids = Category::whereIn('id', $categoryIds)->pluck('id')->all();
+        $biz->categories()->sync($ids);
     }
 
 

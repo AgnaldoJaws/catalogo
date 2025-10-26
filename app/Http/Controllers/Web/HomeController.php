@@ -20,8 +20,6 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-
-        // filtros vindos do front
         $filters = $request->only([
             'city_slug','category_slug','q','lat','lng','radius_km','open_now','sort'
         ]);
@@ -34,7 +32,7 @@ class HomeController extends Controller
             'filters'     => $filters,
             'cities'      => $this->directory->listCities(),
             'categories'  => $this->directory->listCategories(),
-            'page'        => $page,                     // LengthAwarePaginator
+            'page'        => $page,
         ]);
     }
 }

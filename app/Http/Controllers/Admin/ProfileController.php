@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Services\Contracts\Admin\BusinessAdminServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,8 +18,12 @@ class ProfileController extends Controller
         $biz = $this->svc->findOrFail($business);
         $this->authorize('manage', $biz);
 
-        return view('admin.profile.edit', compact('biz'));
+        $selectedCategories = $biz->categories;
+        $allCategories = Category::orderBy('name')->get(['id', 'name', 'slug']);
+        return view('admin.profile.edit', compact('biz', 'selectedCategories', 'allCategories'));
     }
+
+
 
     public function update(Request $request)
     {
@@ -58,6 +63,13 @@ class ProfileController extends Controller
         if ($request->hasFile('logo_file')) {
             $data['logo_path'] = $request->file('logo_file')->store('logos', 'public');
         }
+
+        $catStr = (string) $request->input('category_ids', '');
+        $catIds = array_values(array_unique(array_filter(
+            array_map('intval', preg_split('/\s*,\s*/', $catStr, -1, PREG_SPLIT_NO_EMPTY)),
+            fn ($v) => $v > 0
+        )));
+        $data['category_ids'] = $catIds;
 
         $this->svc->updateProfile($biz->id, $data);
 

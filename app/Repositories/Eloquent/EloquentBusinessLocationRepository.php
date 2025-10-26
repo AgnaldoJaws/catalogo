@@ -25,10 +25,9 @@ class EloquentBusinessLocationRepository implements BusinessLocationRepositoryIn
             ->select('business_locations.*')
             ->join('businesses', 'businesses.id', '=', 'business_locations.business_id')
             ->with([
-                'business:id,name,slug,avg_rating,items_count,status,logo_url',
+                'business:id,name,slug,avg_rating,items_count,status,logo_path',
                 'city:id,name,slug',
-            ])
-            ->where('business_locations.status', 1);
+            ]);
 
         if ($citySlug) {
             $query->whereHas('city', fn($c) => $c->where('slug', $citySlug));

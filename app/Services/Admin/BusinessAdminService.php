@@ -6,6 +6,7 @@ use App\Models\Business;
 use App\Repositories\Contracts\BusinessAdminRepositoryInterface;
 use App\Services\Contracts\Admin\BusinessAdminServiceInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\DB;
 use Psy\Util\Str;
 
 class BusinessAdminService implements BusinessAdminServiceInterface
@@ -13,18 +14,65 @@ class BusinessAdminService implements BusinessAdminServiceInterface
     public function __construct(private readonly BusinessAdminRepositoryInterface $repo) {}
 
     public function findOrFail(int $businessId): Business {
-        $biz = $this->repo->find($businessId);
-        if (!$biz) throw new ModelNotFoundException('Business not found');
+        $biz = $this->repo->findWithRelations($businessId, ['categories']);
+        if (!$biz) {
+            throw new ModelNotFoundException('Business not found');
+        }
         return $biz;
     }
 
-    public function updateProfile(int $businessId, array $data): void {
-        if (!empty($data['name'])) {
+    public function getProfileData(int $businessId): array
+    {
+        $biz = $this->findOrFail($businessId);
 
-            $data['slug'] = $this->slugify($data['name']);
-        }
-        $this->repo->updateProfile($businessId, $data);
+        $allCategories = Category::select('id', 'name', 'slug')
+            ->orderBy('name')
+            ->get();
+
+        $selectedCategories = $biz->categories()
+            ->select('categories.id', 'categories.name', 'categories.slug')
+            ->orderBy('categories.name')
+            ->get();
+
+        return compact('biz', 'allCategories', 'selectedCategories');
     }
+
+    public function syncCategories(int $businessId, array $categoryIds = []): void
+    {
+        $biz = $this->findOrFail($businessId);
+
+        $validIds = Category::whereIn('id', $categoryIds)
+            ->pluck('id')
+            ->all();
+
+        $biz->categories()->sync($validIds);
+    }
+
+    public function updateProfile(int $businessId, array $data): void
+    {
+        DB::transaction(function () use ($businessId, $data) {
+            $biz = $this->repo->find($businessId);
+
+            if (!$biz) {
+                throw new ModelNotFoundException('Business not found');
+            }
+
+            if (!empty($data['name'])) {
+                $newSlug = $this->slugify($data['name']);
+
+                if ($biz->slug !== $newSlug) {
+                    $data['slug'] = $newSlug;
+                }
+            }
+
+            $this->repo->updateProfile($businessId, $data);
+
+            if (isset($data['category_ids']) && is_array($data['category_ids'])) {
+                $this->repo->syncCategories($businessId, $data['category_ids']);
+            }
+        });
+    }
+
 
     public function locations(int $businessId): array {
         return $this->repo->listLocations($businessId);

@@ -47,14 +47,19 @@ class Business extends Model
         return 'slug';
     }
 
-    /* --------- Accessors --------- */
-    public function getLogoSrcAttribute(): ?string
+    public function getLogoSrcAttribute(): string
     {
         if ($this->logo_path) {
             return asset('storage/' . ltrim($this->logo_path, '/'));
         }
-        return $this->logo_url ?: null;
+
+        if ($this->logo_url) {
+            return $this->logo_url;
+        }
+
+        return asset('img/img_1.png');
     }
+
 
     public function getWebsiteUrlAttribute(): ?string
     {

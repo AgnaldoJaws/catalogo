@@ -2,13 +2,16 @@
     use Illuminate\Support\Str;
 
     // número WA do negócio atual (fallback). Deixe vazio se quiser só por item/loja.
-    $waNumber = '13981927262'; //preg_replace('/\D+/', '', $business['whatsapp'] ?? '');
+    $waNumber = preg_replace('/\D+/', '', $business['whatsapp'] ?? '');
 
     // helper preço em R$
     $fmt = fn($cents) => 'R$ '.number_format(($cents ?? 0)/100, 2, ',', '.');
 
     // lista única de categorias (opcional – usado na sidebar)
     $cats = collect($sections ?? [])->pluck('name')->filter()->unique()->values();
+
+    $img = $business['logo_url'];
+
 @endphp
 
     <!doctype html>
@@ -38,8 +41,8 @@
         <div class="collapse navbar-collapse" id="navMain">
             <form class="d-none d-lg-flex ms-3 flex-grow-1" role="search" action="{{ url('/') }}">
                 <div class="input-group">
-                    <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
-                    <input class="form-control" type="search" placeholder="Buscar no catálogo" name="q" value="{{ request('q') }}"/>
+{{--                    <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>--}}
+{{--                    <input class="form-control" type="search" placeholder="Buscar " name="q" value="{{ request('q') }}"/>--}}
                 </div>
             </form>
             <ul class="navbar-nav ms-lg-3 align-items-lg-center">
@@ -53,25 +56,25 @@
 <div class="container mt-3">
     <div class="brand-card p-3 p-md-4 rounded-4">
         <div class="d-flex align-items-start gap-3 flex-wrap">
-            <img class="brand-logo" src="https://placehold.co/200x200?text=Sua Logo" alt="Logo {{ $business['name'] ?? '' }}">
+            <img src="{{ $img  }}" class="img-fluid" style="max-width: 20%; border-radius: 20px" alt="ZapFood">
             <div class="flex-grow-1">
                 <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
                     <div>
                         <h1 class="h4 mb-1">{{ $business['name'] ?? 'Empresa' }}</h1>
-                        <div class="text-muted small">
-                            {{ ($business['items_count'] ?? 0) }} itens no cardápio
-                            @if(!empty($business['avg_rating'])) • Nota média {{ number_format($business['avg_rating'],1,',','.') }} @endif
-                        </div>
+{{--                        <div class="text-muted small">--}}
+{{--                            {{ ($business['items_count'] ?? 0) }} itens no cardápio--}}
+{{--                            @if(!empty($business['avg_rating'])) • Nota média {{ number_format($business['avg_rating'],1,',','.') }} @endif--}}
+{{--                        </div>--}}
                     </div>
                     <div class="d-flex flex-wrap gap-2">
                         <a href="{{ url('/') }}" class="btn btn-outline-secondary">
-                            <i class="bi bi-arrow-left"></i> Voltar ao catálogo
+                            <i class="bi bi-arrow-left"></i> Voltar
                         </a>
-                        @if($waNumber)
-                            <a id="btnWhatsAll" href="https://wa.me/{{ $waNumber }}" target="_blank" class="btn btn-success">
-                                <i class="bi bi-whatsapp"></i> WhatsApp
-                            </a>
-                        @endif
+{{--                        @if($waNumber)--}}
+{{--                            <a id="btnWhatsAll" href="https://wa.me/{{ $waNumber }}" target="_blank" class="btn btn-success">--}}
+{{--                                <i class="bi bi-whatsapp"></i> WhatsApp--}}
+{{--                            </a>--}}
+{{--                        @endif--}}
                     </div>
                 </div>
                 @if(!empty($business['about']))
@@ -119,13 +122,6 @@
                                 <div class="col"><input id="priceMax" type="number" class="form-control form-control-sm" min="0" step="1" placeholder="máx." /></div>
                             </div>
 
-                            <div class="form-label mt-3">Dietas</div>
-                            <div class="d-flex flex-wrap gap-2 mb-2">
-                                <button type="button" class="filter-pill" data-tag="veg">Vegetariano</button>
-                                <button type="button" class="filter-pill" data-tag="vegan">Vegano</button>
-                                <button type="button" class="filter-pill" data-tag="gluten-free">Sem glúten</button>
-                            </div>
-
                             <label class="form-label mt-3">Ordenar</label>
                             <select id="menuSort" class="form-select form-select-sm">
                                 <option value="">Relevância</option>
@@ -149,9 +145,10 @@
                     <h2 id="cat-{{ Str::slug($section['name']) }}" class="h5 mb-3 section-title">{{ $section['name'] }}</h2>
                     <div class="row row-cols-1 row-cols-md-2 g-3 mb-4">
                         @forelse($section['items'] as $it)
+
                             <div class="col">
                                 <div class="card menu-card h-100">
-                                    <img src="{{ asset('img/img_1.png') }}"
+                                    <img src="{{ $it['img'] }}"
                                          class="card-img-top" alt="{{ $it['name'] ?? 'Item' }}">
                                     <div class="card-body">
                                         <h3 class="h6 mb-1">{{ $it['name'] }}</h3>
@@ -194,7 +191,7 @@
 
 <footer class="footer py-4">
     <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
-        <span class="text-muted small">V-Ribiera Food</span>
+        <span class="text-muted small">ZapFood</span>
         <ul class="nav small">
             <li class="nav-item"><a class="nav-link text-muted" href="#">Termos</a></li>
             <li class="nav-item"><a class="nav-link text-muted" href="#">Privacidade</a></li>

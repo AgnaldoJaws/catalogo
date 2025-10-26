@@ -29,11 +29,12 @@
     $distanceKm = $isArray ? ($loc['distance_km'] ?? null) : ($loc->distance_km ?? null);
 
     // Thumb (fallback para picsum)
-   $thumb =  asset('img/img_1.png') ;
+   $thumb = $isArray ? ($loc['thumb_url'] ?? asset('img/img_1.png')) : ($loc->business->logo_src ?? asset('img/img_1.png'));
 
+   $status  = $isArray ? ($loc['is_open_now'] ?? null) : ($loc->is_open_now ?? null);
 
-    // Aberto agora (quando o repo calcular)
-    $isOpen = $isArray ? !empty($loc['is_open_now']) : (bool)($loc->is_open_now ?? false);
+    $isOpen  = ((int) $status) === 1;
+
 @endphp
 
 <div class="card card-restaurant h-100"
@@ -43,6 +44,14 @@
      data-lat="{{ $lat }}"
      data-lng="{{ $lng }}">
     <img src="{{ $thumb }}" class="card-img-top" alt="">
+    <div class="position-absolute top-0 end-0 m-2">
+        @if($isOpen)
+            <span class="badge bg-success px-3 py-2 shadow-sm">Aberto agora</span>
+        @else
+            <span class="badge bg-secondary px-3 py-2 shadow-sm">Fechado</span>
+        @endif
+    </div>
+
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-start">
             <div>

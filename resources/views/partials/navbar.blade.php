@@ -10,7 +10,7 @@
             <form class="d-none d-lg-flex ms-3 flex-grow-1" role="search" action="{{ url('/') }}">
                 <div class="input-group">
                     <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
-                    <input class="form-control" type="search" placeholder="Buscar no catálogo" name="q" value="{{ request('q') }}"/>
+                    <input class="form-control" type="search" placeholder="Buscar " name="q" value="{{ request('q') }}"/>
                 </div>
             </form>
             <ul class="navbar-nav ms-lg-3 align-items-lg-center">
@@ -65,16 +65,14 @@
 
                     @php $sort = request('sort','rating') @endphp
                     <select id="selectSort" class="form-select" name="sort" style="min-width:220px">
-                        <option value="rating"  {{ $sort==='rating'?'selected':'' }}>Relevância</option>
-                        <option value="nearest" {{ $sort==='nearest'?'selected':'' }}>Mais próximos</option>
                         <option value="az"      {{ $sort==='az'?'selected':'' }}>A–Z</option>
                         <option value="za"      {{ $sort==='za'?'selected':'' }}>Z–A</option>
                         <option value="items"   {{ $sort==='items'?'selected':'' }}>Mais itens</option>
                     </select>
 
-                    <button class="btn btn-outline-secondary ms-auto" id="btnNearMe" type="button">
-                        <i class="bi bi-geo"></i> Perto de mim
-                    </button>
+{{--                    <button class="btn btn-outline-secondary ms-auto" id="btnNearMe" type="button">--}}
+{{--                        <i class="bi bi-geo"></i> Perto de mim--}}
+{{--                    </button>--}}
 
                     {{-- ocultos necessários --}}
                     <input type="hidden" name="category_slug" id="category_slug" value="{{ request('category_slug') }}">
@@ -85,10 +83,10 @@
                 </form>
 
                 {{-- Raio só aparece quando “perto de mim” está ativo --}}
-                <div class="radius-wrapper mt-2" id="radiusWrapper">
-                    <label class="form-label small mb-1">Raio de busca: <span id="radiusValue">{{ (int)request('radius_km',5) }}</span> km</label>
-                    <input type="range" class="form-range" min="1" max="25" step="1" value="{{ (int)request('radius_km',5) }}" id="radiusRange" />
-                </div>
+{{--                <div class="radius-wrapper mt-2" id="radiusWrapper">--}}
+{{--                    <label class="form-label small mb-1">Raio de busca: <span id="radiusValue">{{ (int)request('radius_km',5) }}</span> km</label>--}}
+{{--                    <input type="range" class="form-range" min="1" max="25" step="1" value="{{ (int)request('radius_km',5) }}" id="radiusRange" />--}}
+{{--                </div>--}}
             </div>
         </div>
     </div>
