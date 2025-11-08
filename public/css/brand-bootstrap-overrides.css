@@ -1,221 +1,1024 @@
+/*!* ==========================================================================*/
+/*   TAKI FULL THEME  —  Parte 1/3*/
+/*   Seções:*/
+/*   1. Root Tokens / Colors*/
+/*   2. Base & Typography*/
+/*   3. Utilities (bg/text/border)*/
+/*   4. Buttons (solid, outline, link)*/
+/*   5. Forms & Inputs*/
+/*   ========================================================================== *!*/
+
+/*!* --------------------------------------------------------------------------*/
+/*   1. ROOT TOKENS / COLORS*/
+/*   -------------------------------------------------------------------------- *!*/
+/*@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');*/
+
+/*:root {*/
+/*    !* Paleta principal da marca *!*/
+/*    --taki-orange: #FF6B2C;*/
+/*    --taki-orange-600: #FF5520;*/
+/*    --taki-orange-700: #E63E3A;*/
+/*    --taki-purple: #9B3AFF;*/
+/*    --taki-success: #25D366;*/
+/*    --taki-warning: #FFC107;*/
+/*    --taki-danger: #E63E3A;*/
+/*    --taki-info: #9B3AFF;*/
+/*    --taki-secondary: #202737;*/
+/*    --taki-light: #F5F5F7;*/
+/*    --taki-dark: #0D0F12;*/
+/*    --taki-muted: #6B6F76;*/
+/*    --taki-border: #E7E7E9;*/
+/*    --taki-card: #FFFFFF;*/
+
+/*    !* Bootstrap overrides *!*/
+/*    --bs-body-font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif;*/
+/*    --bs-body-color: var(--taki-secondary);*/
+/*    --bs-body-bg: var(--taki-light);*/
+/*    --bs-border-color: var(--taki-border);*/
+
+/*    !* Cores semânticas padrão Bootstrap *!*/
+/*    --bs-primary: var(--taki-orange);*/
+/*    --bs-secondary: var(--taki-secondary);*/
+/*    --bs-success: var(--taki-success);*/
+/*    --bs-info: var(--taki-info);*/
+/*    --bs-warning: var(--taki-warning);*/
+/*    --bs-danger: var(--taki-danger);*/
+/*    --bs-light: var(--taki-light);*/
+/*    --bs-dark: var(--taki-dark);*/
+
+/*    !* Links *!*/
+/*    --bs-link-color: var(--taki-orange);*/
+/*    --bs-link-hover-color: var(--taki-orange-600);*/
+/*}*/
+
+/*!* --------------------------------------------------------------------------*/
+/*   2. BASE & TYPOGRAPHY*/
+/*   -------------------------------------------------------------------------- *!*/
+/*html, body {*/
+/*    font-family: var(--bs-body-font-family);*/
+/*    background: var(--bs-body-bg);*/
+/*    color: var(--bs-body-color);*/
+/*    -webkit-font-smoothing: antialiased;*/
+/*    -moz-osx-font-smoothing: grayscale;*/
+/*}*/
+
+/*h1, h2, h3, h4, h5, h6 {*/
+/*    font-weight: 700;*/
+/*    color: var(--taki-secondary);*/
+/*    letter-spacing: .2px;*/
+/*}*/
+
+/*p, span, li, a {*/
+/*    font-weight: 400;*/
+/*    color: var(--taki-secondary);*/
+/*}*/
+
+/*a {*/
+/*    color: var(--taki-orange);*/
+/*    text-decoration: none;*/
+/*}*/
+/*a:hover {*/
+/*    color: var(--taki-orange-600);*/
+/*    text-decoration: underline;*/
+/*    text-underline-offset: 2px;*/
+/*}*/
+
+/*small, .text-muted {*/
+/*    color: var(--taki-muted) !important;*/
+/*}*/
+
+/*!* --------------------------------------------------------------------------*/
+/*   3. UTILITÁRIAS (BG / TEXT / BORDER)*/
+/*   -------------------------------------------------------------------------- *!*/
+/*!* Backgrounds *!*/
+/*.bg-primary    { background-color: var(--taki-orange) !important; color: #fff !important; }*/
+/*.bg-secondary  { background-color: var(--taki-secondary) !important; color: #fff !important; }*/
+/*.bg-success    { background-color: var(--taki-success) !important; color: #fff !important; }*/
+/*.bg-danger     { background-color: var(--taki-danger) !important; color: #fff !important; }*/
+/*.bg-warning    { background-color: var(--taki-warning) !important; color: #202020 !important; }*/
+/*.bg-info       { background-color: var(--taki-info) !important; color: #fff !important; }*/
+/*.bg-light      { background-color: var(--taki-light) !important; color: #202020 !important; }*/
+/*.bg-dark       { background-color: var(--taki-dark) !important; color: #fff !important; }*/
+
+/*!* Text *!*/
+/*.text-primary   { color: var(--taki-orange) !important; }*/
+/*.text-secondary { color: var(--taki-secondary) !important; }*/
+/*.text-success   { color: var(--taki-success) !important; }*/
+/*.text-danger    { color: var(--taki-danger) !important; }*/
+/*.text-warning   { color: var(--taki-warning) !important; }*/
+/*.text-info      { color: var(--taki-info) !important; }*/
+/*.text-light     { color: var(--taki-light) !important; }*/
+/*.text-dark      { color: var(--taki-dark) !important; }*/
+
+/*!* Borders *!*/
+/*.border-primary   { border-color: var(--taki-orange) !important; }*/
+/*.border-secondary { border-color: var(--taki-secondary) !important; }*/
+/*.border-success   { border-color: var(--taki-success) !important; }*/
+/*.border-danger    { border-color: var(--taki-danger) !important; }*/
+/*.border-warning   { border-color: var(--taki-warning) !important; }*/
+/*.border-info      { border-color: var(--taki-info) !important; }*/
+/*.border-light     { border-color: var(--taki-light) !important; }*/
+/*.border-dark      { border-color: var(--taki-dark) !important; }*/
+
+/*!* --------------------------------------------------------------------------*/
+/*   4. BOTÕES (SOLID, OUTLINE, LINK)*/
+/*   -------------------------------------------------------------------------- *!*/
+/*.btn {*/
+/*    border-radius: .6rem;*/
+/*    font-weight: 600;*/
+/*    transition: all .15s ease-in-out;*/
+/*    box-shadow: 0 2px 6px rgba(0,0,0,.04);*/
+/*}*/
+/*.btn:focus {*/
+/*    box-shadow: 0 0 0 .25rem color-mix(in srgb, var(--taki-orange) 25%, transparent);*/
+/*}*/
+
+/*!* === Botões Principais === *!*/
+/*.btn-primary {*/
+/*    color: #fff;*/
+/*    background: linear-gradient(135deg, var(--taki-orange) 0%, var(--taki-orange-700) 100%);*/
+/*    border: none;*/
+/*}*/
+/*.btn-primary:hover {*/
+/*    background: linear-gradient(135deg, #FF834C 0%, #E94F48 100%);*/
+/*}*/
+/*.btn-primary:active, .btn-primary.active {*/
+/*    background: var(--taki-orange-700);*/
+/*}*/
+
+/*!* Success *!*/
+/*.btn-success {*/
+/*    color: #fff;*/
+/*    background-color: var(--taki-success);*/
+/*    border: none;*/
+/*}*/
+/*.btn-success:hover {*/
+/*    background-color: color-mix(in srgb, var(--taki-success) 85%, black);*/
+/*}*/
+
+/*!* Danger *!*/
+/*.btn-danger {*/
+/*    color: #fff;*/
+/*    background-color: var(--taki-danger);*/
+/*    border: none;*/
+/*}*/
+/*.btn-danger:hover {*/
+/*    background-color: color-mix(in srgb, var(--taki-danger) 85%, black);*/
+/*}*/
+
+/*!* Warning *!*/
+/*.btn-warning {*/
+/*    color: #202020;*/
+/*    background-color: var(--taki-warning);*/
+/*    border: none;*/
+/*}*/
+/*.btn-warning:hover {*/
+/*    background-color: color-mix(in srgb, var(--taki-warning) 85%, black);*/
+/*    color: #fff;*/
+/*}*/
+
+/*!* Info *!*/
+/*.btn-info {*/
+/*    color: #fff;*/
+/*    background-color: var(--taki-info);*/
+/*    border: none;*/
+/*}*/
+/*.btn-info:hover {*/
+/*    background-color: color-mix(in srgb, var(--taki-info) 85%, black);*/
+/*}*/
+
+/*!* Secondary *!*/
+/*.btn-secondary {*/
+/*    color: #fff;*/
+/*    background-color: var(--taki-secondary);*/
+/*    border: none;*/
+/*}*/
+/*.btn-secondary:hover {*/
+/*    background-color: color-mix(in srgb, var(--taki-secondary) 85%, black);*/
+/*}*/
+
+/*!* Light *!*/
+/*.btn-light {*/
+/*    color: var(--taki-secondary);*/
+/*    background-color: #fff;*/
+/*    border: 1px solid var(--taki-border);*/
+/*}*/
+/*.btn-light:hover {*/
+/*    background-color: #f9f9f9;*/
+/*}*/
+
+/*!* Dark *!*/
+/*.btn-dark {*/
+/*    color: #fff;*/
+/*    background-color: var(--taki-dark);*/
+/*    border: none;*/
+/*}*/
+/*.btn-dark:hover {*/
+/*    background-color: color-mix(in srgb, var(--taki-dark) 80%, #fff);*/
+/*}*/
+
+/*!* === Outline Buttons === *!*/
+/*.btn-outline-primary {*/
+/*    color: var(--taki-orange);*/
+/*    border: 1px solid var(--taki-orange);*/
+/*    background: transparent;*/
+/*}*/
+/*.btn-outline-primary:hover {*/
+/*    background: var(--taki-orange);*/
+/*    color: #fff;*/
+/*}*/
+
+/*.btn-outline-success {*/
+/*    color: var(--taki-success);*/
+/*    border-color: var(--taki-success);*/
+/*}*/
+/*.btn-outline-success:hover {*/
+/*    background: var(--taki-success);*/
+/*    color: #fff;*/
+/*}*/
+
+/*.btn-outline-danger {*/
+/*    color: var(--taki-danger);*/
+/*    border-color: var(--taki-danger);*/
+/*}*/
+/*.btn-outline-danger:hover {*/
+/*    background: var(--taki-danger);*/
+/*    color: #fff;*/
+/*}*/
+
+/*.btn-outline-warning {*/
+/*    color: var(--taki-warning);*/
+/*    border-color: var(--taki-warning);*/
+/*}*/
+/*.btn-outline-warning:hover {*/
+/*    background: var(--taki-warning);*/
+/*    color: #fff;*/
+/*}*/
+
+/*.btn-outline-info {*/
+/*    color: var(--taki-info);*/
+/*    border-color: var(--taki-info);*/
+/*}*/
+/*.btn-outline-info:hover {*/
+/*    background: var(--taki-info);*/
+/*    color: #fff;*/
+/*}*/
+
+/*.btn-outline-secondary {*/
+/*    color: var(--taki-secondary);*/
+/*    border-color: var(--taki-secondary);*/
+/*}*/
+/*.btn-outline-secondary:hover {*/
+/*    background: var(--taki-secondary);*/
+/*    color: #fff;*/
+/*}*/
+
+/*!* === Link Buttons === *!*/
+/*.btn-link {*/
+/*    color: var(--taki-orange);*/
+/*    font-weight: 600;*/
+/*    text-decoration: none;*/
+/*}*/
+/*.btn-link:hover {*/
+/*    color: var(--taki-orange-700);*/
+/*    text-decoration: underline;*/
+/*}*/
+
+/*!* --------------------------------------------------------------------------*/
+/*   5. FORMULÁRIOS E INPUTS*/
+/*   -------------------------------------------------------------------------- *!*/
+/*.form-control, .form-select {*/
+/*    border-radius: .6rem;*/
+/*    border: 1px solid var(--taki-border);*/
+/*    background: #fff;*/
+/*    color: var(--taki-secondary);*/
+/*    transition: all .15s ease;*/
+/*}*/
+/*.form-control:focus, .form-select:focus {*/
+/*    border-color: var(--taki-orange);*/
+/*    box-shadow: 0 0 0 .2rem color-mix(in srgb, var(--taki-orange) 20%, transparent);*/
+/*    outline: 0;*/
+/*}*/
+/*.form-control::placeholder {*/
+/*    color: var(--taki-muted);*/
+/*}*/
+/*.form-check-input {*/
+/*    border-radius: .35rem;*/
+/*    border-color: var(--taki-border);*/
+/*}*/
+/*.form-check-input:checked {*/
+/*    background-color: var(--taki-orange);*/
+/*    border-color: var(--taki-orange);*/
+/*}*/
+/*.form-switch .form-check-input:focus {*/
+/*    box-shadow: 0 0 0 .15rem color-mix(in srgb, var(--taki-orange) 20%, transparent);*/
+/*}*/
+/*.form-range::-webkit-slider-thumb {*/
+/*    background: var(--taki-orange);*/
+/*}*/
+/*.form-range::-moz-range-thumb {*/
+/*    background: var(--taki-orange);*/
+/*}*/
+
+
+/*!* ==========================================================================*/
+/*   TAKI FULL THEME — Parte 2/3*/
+/*   Seções:*/
+/*   6. Navbar / Nav / Tabs / Pills*/
+/*   7. Dropdowns*/
+/*   8. Cards*/
+/*   9. Alerts / Badges*/
+/*   10. Tables / Pagination / Progress*/
+/*   ========================================================================== *!*/
+
+/*!* --------------------------------------------------------------------------*/
+/*   6. NAVBAR / NAV / TABS / PILLS*/
+/*   -------------------------------------------------------------------------- *!*/
+/*.navbar {*/
+/*    background: #fff;*/
+/*    border-bottom: 1px solid var(--taki-border);*/
+/*    padding: .6rem 1rem;*/
+/*}*/
+/*.navbar-brand {*/
+/*    color: var(--taki-secondary);*/
+/*    font-weight: 700;*/
+/*    font-size: 1.1rem;*/
+/*}*/
+/*.navbar-brand:hover { color: var(--taki-orange); }*/
+
+/*.navbar .nav-link {*/
+/*    color: var(--taki-secondary);*/
+/*    font-weight: 500;*/
+/*}*/
+/*.navbar .nav-link:hover,*/
+/*.navbar .nav-link.active {*/
+/*    color: var(--taki-orange);*/
+/*}*/
+
+/*!* Tabs *!*/
+/*.nav-tabs {*/
+/*    border-bottom: 1px solid var(--taki-border);*/
+/*}*/
+/*.nav-tabs .nav-link {*/
+/*    border: 0;*/
+/*    border-bottom: 2px solid transparent;*/
+/*    color: var(--taki-muted);*/
+/*    font-weight: 600;*/
+/*    transition: all .15s ease;*/
+/*}*/
+/*.nav-tabs .nav-link:hover {*/
+/*    color: var(--taki-orange);*/
+/*    border-bottom-color: color-mix(in srgb, var(--taki-orange) 30%, #fff);*/
+/*}*/
+/*.nav-tabs .nav-link.active {*/
+/*    color: var(--taki-orange);*/
+/*    border-bottom-color: var(--taki-orange);*/
+/*}*/
+
+/*!* Pills *!*/
+/*.nav-pills .nav-link {*/
+/*    border-radius: 999px;*/
+/*    color: var(--taki-secondary);*/
+/*    font-weight: 600;*/
+/*}*/
+/*.nav-pills .nav-link.active {*/
+/*    background: var(--taki-orange);*/
+/*    color: #fff;*/
+/*}*/
+
+/*!* --------------------------------------------------------------------------*/
+/*   7. DROPDOWNS*/
+/*   -------------------------------------------------------------------------- *!*/
+/*.dropdown-menu {*/
+/*    border-radius: .6rem;*/
+/*    border: 1px solid var(--taki-border);*/
+/*    box-shadow: 0 8px 24px rgba(0,0,0,.08);*/
+/*    background: #fff;*/
+/*    overflow: hidden;*/
+/*}*/
+/*.dropdown-item {*/
+/*    padding: .5rem 1rem;*/
+/*    font-weight: 500;*/
+/*    color: var(--taki-secondary);*/
+/*}*/
+/*.dropdown-item:hover {*/
+/*    background: color-mix(in srgb, var(--taki-orange) 8%, #fff);*/
+/*    color: var(--taki-orange);*/
+/*}*/
+/*.dropdown-item.active,*/
+/*.dropdown-item:active {*/
+/*    background: var(--taki-orange);*/
+/*    color: #fff;*/
+/*}*/
+
+/*!* --------------------------------------------------------------------------*/
+/*   8. CARDS*/
+/*   -------------------------------------------------------------------------- *!*/
+/*.card {*/
+/*    border-radius: .8rem;*/
+/*    border: 1px solid var(--taki-border);*/
+/*    background: var(--taki-card);*/
+/*    box-shadow: 0 6px 20px rgba(0,0,0,.06);*/
+/*}*/
+/*.card-header {*/
+/*    border-bottom: 1px solid var(--taki-border);*/
+/*    background: #fff;*/
+/*    font-weight: 600;*/
+/*}*/
+/*.card-footer {*/
+/*    border-top: 1px solid var(--taki-border);*/
+/*    background: #fff;*/
+/*}*/
+/*.card-title { font-weight: 700; }*/
+/*.card-subtitle { color: var(--taki-muted); }*/
+
+/*!* --------------------------------------------------------------------------*/
+/*   9. ALERTS / BADGES*/
+/*   -------------------------------------------------------------------------- *!*/
+/*.alert {*/
+/*    border-radius: .6rem;*/
+/*    border: 1px solid var(--taki-border);*/
+/*    font-weight: 500;*/
+/*    padding: .9rem 1rem;*/
+/*}*/
+/*.alert-primary {*/
+/*    background: #FFF1EB;*/
+/*    color: #721f11;*/
+/*    border-color: #FFD6C8;*/
+/*}*/
+/*.alert-success {*/
+/*    background: #E8FEEE;*/
+/*    color: #124D24;*/
+/*    border-color: #C9F1D0;*/
+/*}*/
+/*.alert-danger {*/
+/*    background: #FFECEA;*/
+/*    color: #641314;*/
+/*    border-color: #FFC4C0;*/
+/*}*/
+/*.alert-warning {*/
+/*    background: #FFF9E0;*/
+/*    color: #5E4900;*/
+/*    border-color: #FFEFAD;*/
+/*}*/
+/*.alert-info {*/
+/*    background: #F4EEFF;*/
+/*    color: #3C2872;*/
+/*    border-color: #D5C4FF;*/
+/*}*/
+/*.alert-secondary {*/
+/*    background: #F3F4F5;*/
+/*    color: #202737;*/
+/*    border-color: #E0E0E0;*/
+/*}*/
+
+/*.badge {*/
+/*    border-radius: 999px;*/
+/*    font-weight: 600;*/
+/*    padding: .4em .75em;*/
+/*    letter-spacing: .1px;*/
+/*}*/
+/*.badge.bg-primary   { background: var(--taki-orange) !important; color: #fff; }*/
+/*.badge.bg-success   { background: var(--taki-success) !important; color: #fff; }*/
+/*.badge.bg-danger    { background: var(--taki-danger) !important; color: #fff; }*/
+/*.badge.bg-warning   { background: var(--taki-warning) !important; color: #202020; }*/
+/*.badge.bg-info      { background: var(--taki-info) !important; color: #fff; }*/
+/*.badge.bg-secondary { background: var(--taki-secondary) !important; color: #fff; }*/
+/*.badge.bg-dark      { background: var(--taki-dark) !important; color: #fff; }*/
+/*.badge.bg-light     { background: var(--taki-light) !important; color: #202020; }*/
+
+/*!* --------------------------------------------------------------------------*/
+/*   10. TABLES / PAGINATION / PROGRESS*/
+/*   -------------------------------------------------------------------------- *!*/
+/*!* Tables *!*/
+/*.table {*/
+/*    border-color: var(--taki-border);*/
+/*    color: var(--taki-secondary);*/
+/*    vertical-align: middle;*/
+/*}*/
+/*.table thead th {*/
+/*    border-bottom: 2px solid var(--taki-border);*/
+/*    color: var(--taki-secondary);*/
+/*    font-weight: 700;*/
+/*    background: #fafafa;*/
+/*}*/
+/*.table tbody td {*/
+/*    border-top: 1px solid var(--taki-border);*/
+/*}*/
+/*.table-striped>tbody>tr:nth-of-type(odd) {*/
+/*    background: #fafafa;*/
+/*}*/
+/*.table-hover>tbody>tr:hover {*/
+/*    background: #f9f9fb;*/
+/*}*/
+
+/*!* Pagination *!*/
+/*.page-link {*/
+/*    color: var(--taki-orange);*/
+/*    border-radius: .5rem;*/
+/*    border: 1px solid var(--taki-border);*/
+/*    transition: all .15s ease;*/
+/*}*/
+/*.page-link:hover {*/
+/*    color: #fff;*/
+/*    background: var(--taki-orange);*/
+/*    border-color: var(--taki-orange);*/
+/*}*/
+/*.page-item.active .page-link {*/
+/*    color: #fff;*/
+/*    background: var(--taki-orange);*/
+/*    border-color: var(--taki-orange);*/
+/*}*/
+
+/*!* Progress *!*/
+/*.progress {*/
+/*    background: #ECEFF3;*/
+/*    border-radius: 1rem;*/
+/*    height: .75rem;*/
+/*}*/
+/*.progress-bar {*/
+/*    background: linear-gradient(135deg, var(--taki-orange) 0%, var(--taki-orange-700) 100%);*/
+/*    border-radius: 1rem;*/
+/*    font-size: .75rem;*/
+/*}*/
+
+
+/*!* ==========================================================================*/
+/*   TAKI FULL THEME — Parte 3/3*/
+/*   Seções:*/
+/*   11. Modals / Offcanvas*/
+/*   12. Tooltips / Popovers / Toasts / Helpers*/
+/*   13. Dark Mode*/
+/*   ========================================================================== *!*/
+
+/*!* --------------------------------------------------------------------------*/
+/*   11. MODALS / OFFCANVAS*/
+/*   -------------------------------------------------------------------------- *!*/
+/*.modal-content {*/
+/*    border-radius: .8rem;*/
+/*    border: 1px solid var(--taki-border);*/
+/*    box-shadow: 0 20px 60px rgba(0,0,0,.16);*/
+/*    background: #fff;*/
+/*}*/
+/*.modal-header {*/
+/*    border-bottom: 1px solid var(--taki-border);*/
+/*    font-weight: 600;*/
+/*}*/
+/*.modal-footer {*/
+/*    border-top: 1px solid var(--taki-border);*/
+/*}*/
+/*.offcanvas {*/
+/*    border-left: 1px solid var(--taki-border);*/
+/*    background: #fff;*/
+/*}*/
+/*.offcanvas-header {*/
+/*    border-bottom: 1px solid var(--taki-border);*/
+/*    font-weight: 600;*/
+/*}*/
+/*.offcanvas-title {*/
+/*    font-weight: 700;*/
+/*}*/
+
+/*!* --------------------------------------------------------------------------*/
+/*   12. TOOLTIPS / POPOVERS / TOASTS / HELPERS*/
+/*   -------------------------------------------------------------------------- *!*/
+/*!* Tooltips *!*/
+/*.tooltip .tooltip-inner {*/
+/*    background: var(--taki-secondary);*/
+/*    color: #fff;*/
+/*    border-radius: .4rem;*/
+/*    padding: .35rem .6rem;*/
+/*    font-size: .8rem;*/
+/*}*/
+/*.tooltip.bs-tooltip-auto[data-popper-placement^=top] .tooltip-arrow::before {*/
+/*    border-top-color: var(--taki-secondary);*/
+/*}*/
+/*.tooltip.bs-tooltip-auto[data-popper-placement^=bottom] .tooltip-arrow::before {*/
+/*    border-bottom-color: var(--taki-secondary);*/
+/*}*/
+
+/*!* Popovers *!*/
+/*.popover {*/
+/*    border: 1px solid var(--taki-border);*/
+/*    border-radius: .6rem;*/
+/*    box-shadow: 0 10px 30px rgba(0,0,0,.12);*/
+/*    background: #fff;*/
+/*}*/
+/*.popover-header {*/
+/*    background: #fff;*/
+/*    font-weight: 700;*/
+/*    border-bottom: 1px solid var(--taki-border);*/
+/*}*/
+/*.popover-body {*/
+/*    color: var(--taki-secondary);*/
+/*    font-size: .9rem;*/
+/*}*/
+
+/*!* Toasts *!*/
+/*.toast {*/
+/*    border-radius: .6rem;*/
+/*    border: 1px solid var(--taki-border);*/
+/*    box-shadow: 0 10px 30px rgba(0,0,0,.10);*/
+/*    background: #fff;*/
+/*    font-weight: 500;*/
+/*}*/
+/*.toast-header {*/
+/*    border-bottom: 1px solid var(--taki-border);*/
+/*}*/
+/*.toast-body {*/
+/*    color: var(--taki-secondary);*/
+/*}*/
+
+/*!* Helpers *!*/
+/*.shadow-soft { box-shadow: 0 6px 20px rgba(0,0,0,.06) !important; }*/
+/*.shadow-strong { box-shadow: 0 10px 30px rgba(0,0,0,.12) !important; }*/
+/*.rounded-lg { border-radius: .8rem !important; }*/
+/*.rounded-xl { border-radius: 1.2rem !important; }*/
+/*.text-brand { color: var(--taki-orange) !important; }*/
+
+/*!* Floating Action Button (FAB) *!*/
+/*#cartFab {*/
+/*    border-radius: 999px;*/
+/*    box-shadow: 0 6px 24px rgba(0,0,0,.2);*/
+/*    background: linear-gradient(135deg, var(--taki-orange) 0%, var(--taki-orange-700) 100%);*/
+/*    color: #fff;*/
+/*    width: 54px;*/
+/*    height: 54px;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    border: none;*/
+/*}*/
+/*#cartFab:hover {*/
+/*    background: linear-gradient(135deg, #FF834C 0%, #E94F48 100%);*/
+/*}*/
+
+/*!* --------------------------------------------------------------------------*/
+/*   13. DARK MODE*/
+/*   -------------------------------------------------------------------------- *!*/
+/*@media (prefers-color-scheme: dark) {*/
+/*    html, body {*/
+/*        background: var(--taki-dark);*/
+/*        color: #E5E7EB;*/
+/*    }*/
+
+/*    !* Base *!*/
+/*    .bg-light, .card, .modal-content, .popover, .toast, .offcanvas {*/
+/*        background: #111418 !important;*/
+/*        color: #E5E7EB;*/
+/*        border-color: #1A1F26;*/
+/*    }*/
+/*    .border-light { border-color: #2A2E36 !important; }*/
+
+/*    !* Navbar *!*/
+/*    .navbar {*/
+/*        background: #111418;*/
+/*        border-bottom-color: #1A1F26;*/
+/*    }*/
+/*    .navbar .nav-link {*/
+/*        color: #E5E7EB;*/
+/*    }*/
+/*    .navbar .nav-link:hover {*/
+/*        color: var(--taki-orange);*/
+/*    }*/
+
+/*    !* Cards *!*/
+/*    .card {*/
+/*        background: #0F1217;*/
+/*        border-color: #1A1F26;*/
+/*        box-shadow: none;*/
+/*    }*/
+
+/*    !* Inputs *!*/
+/*    .form-control, .form-select {*/
+/*        background: #181B20;*/
+/*        color: #E5E7EB;*/
+/*        border-color: #2A2E36;*/
+/*    }*/
+/*    .form-control:focus, .form-select:focus {*/
+/*        border-color: var(--taki-orange);*/
+/*        box-shadow: 0 0 0 .2rem color-mix(in srgb, var(--taki-orange) 25%, transparent);*/
+/*    }*/
+
+/*    !* Buttons *!*/
+/*    .btn-light {*/
+/*        background: #1A1F26;*/
+/*        color: #E5E7EB;*/
+/*        border: 1px solid #2A2E36;*/
+/*    }*/
+/*    .btn-light:hover {*/
+/*        background: #222830;*/
+/*    }*/
+
+/*    .btn-outline-primary {*/
+/*        color: var(--taki-orange);*/
+/*        border-color: var(--taki-orange);*/
+/*    }*/
+/*    .btn-outline-primary:hover {*/
+/*        background: var(--taki-orange);*/
+/*        color: #fff;*/
+/*    }*/
+
+/*    !* Tables *!*/
+/*    .table {*/
+/*        color: #E5E7EB;*/
+/*    }*/
+/*    .table thead th {*/
+/*        background: #181B20;*/
+/*        color: #E5E7EB;*/
+/*    }*/
+/*    .table tbody td {*/
+/*        border-top-color: #2A2E36;*/
+/*    }*/
+
+/*    !* Dropdowns *!*/
+/*    .dropdown-menu {*/
+/*        background: #0F1217;*/
+/*        border-color: #1A1F26;*/
+/*    }*/
+/*    .dropdown-item {*/
+/*        color: #E5E7EB;*/
+/*    }*/
+/*    .dropdown-item:hover {*/
+/*        background: color-mix(in srgb, var(--taki-orange) 12%, #0F1217);*/
+/*        color: var(--taki-orange);*/
+/*    }*/
+
+/*    !* Alerts *!*/
+/*    .alert-primary {*/
+/*        background: #2C1612;*/
+/*        color: #FFBCA9;*/
+/*        border-color: #4B2A23;*/
+/*    }*/
+/*    .alert-success {*/
+/*        background: #0E2713;*/
+/*        color: #A9F0B5;*/
+/*        border-color: #173F1E;*/
+/*    }*/
+/*    .alert-danger {*/
+/*        background: #2A1010;*/
+/*        color: #FFB6B3;*/
+/*        border-color: #4C1E1E;*/
+/*    }*/
+/*    .alert-warning {*/
+/*        background: #3B2D00;*/
+/*        color: #FFEBA7;*/
+/*        border-color: #5E4800;*/
+/*    }*/
+/*    .alert-info {*/
+/*        background: #1D0C38;*/
+/*        color: #D7BFFF;*/
+/*        border-color: #301C52;*/
+/*    }*/
+
+/*    !* Progress bar *!*/
+/*    .progress {*/
+/*        background: #222830;*/
+/*    }*/
+/*    .progress-bar {*/
+/*        background: linear-gradient(135deg, var(--taki-orange) 0%, var(--taki-orange-700) 100%);*/
+/*    }*/
+
+/*    !* Tooltips *!*/
+/*    .tooltip .tooltip-inner {*/
+/*        background: #fff;*/
+/*        color: var(--taki-secondary);*/
+/*    }*/
+
+/*    !* Toasts *!*/
+/*    .toast {*/
+/*        background: #181B20;*/
+/*        border-color: #2A2E36;*/
+/*        color: #E5E7EB;*/
+/*    }*/
+
+/*    !* General *!*/
+/*    a { color: var(--taki-orange); }*/
+/*    a:hover { color: var(--taki-orange-600); }*/
+/*}*/
+
+
 /* ==========================================================================
-   brand-bootstrap-overrides.css — ZapFood (primária #fe3d28 / verde suporte)
+   FEIRAON FULL THEME — Parte 1/3
+   Seções:
+   1. Root Tokens / Colors
+   2. Base & Typography
+   3. Utilities (bg/text/border)
+   4. Buttons (solid, outline, link)
+   5. Forms & Inputs
    ========================================================================== */
 
-/* Fonte */
+/* --------------------------------------------------------------------------
+   1. ROOT TOKENS / COLORS
+   -------------------------------------------------------------------------- */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-/* ==== Tokens de cor ZapFood ==== */
-:root{
-    /* Paleta principal (laranja da logo) */
-    --zap-orange:#fe3d28;
-    --zap-orange-600:#e73624;
-    --zap-orange-700:#cc2f1f;
+:root {
+    /* Paleta principal da marca FeiraON */
+    --feiraon-green-dark: #2E6B1D;
+    --feiraon-green-medium: #67AA40;
+    --feiraon-green-light: #A3D97B;
+    --feiraon-yellow: #FFC300;
+    --feiraon-success: #67AA40;
+    --feiraon-warning: #FFC300;
+    --feiraon-danger: #E63E3A;
+    --feiraon-info: #A3D97B;
+    --feiraon-secondary: #333333;
+    --feiraon-light: #F7F8F5;
+    --feiraon-dark: #111C12;
+    --feiraon-muted: #777A74;
+    --feiraon-border: #E2E5DF;
+    --feiraon-card: #FFFFFF;
 
-    /* Verde de suporte para marca / ícones */
-    --support-green:#25D366;
+    /* Bootstrap overrides */
+    --bs-body-font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif;
+    --bs-body-color: var(--feiraon-secondary);
+    --bs-body-bg: var(--feiraon-light);
+    --bs-border-color: var(--feiraon-border);
 
-    /* Tornando o laranja a cor principal do sistema */
-    --zap-green:var(--zap-orange);
-    --zap-green-600:var(--zap-orange-600);
-    --zap-green-700:var(--zap-orange-700);
+    /* Cores semânticas padrão Bootstrap */
+    --bs-primary: var(--feiraon-green-medium);
+    --bs-secondary: var(--feiraon-secondary);
+    --bs-success: var(--feiraon-success);
+    --bs-info: var(--feiraon-info);
+    --bs-warning: var(--feiraon-warning);
+    --bs-danger: var(--feiraon-danger);
+    --bs-light: var(--feiraon-light);
+    --bs-dark: var(--feiraon-dark);
 
-    /* Bootstrap vars */
-    --bs-primary:var(--zap-green);
-    --bs-link-color:var(--zap-green);
-    --bs-link-hover-color:var(--zap-green-600);
-
-    /* Outros tons */
-    --zap-red:#E53935;
-    --ink:#111111;
-    --muted:#6f6f6f;
-    --bg:#f7f7f7;
-    --card:#ffffff;
-    --border:#ececec;
+    /* Links */
+    --bs-link-color: var(--feiraon-green-medium);
+    --bs-link-hover-color: var(--feiraon-green-dark);
 }
 
-html, body{
-    font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans";
-    color:var(--ink);
-    background:var(--bg);
-    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+/* --------------------------------------------------------------------------
+   2. BASE & TYPOGRAPHY
+   -------------------------------------------------------------------------- */
+html, body {
+    font-family: var(--bs-body-font-family);
+    background: var(--bs-body-bg);
+    color: var(--bs-body-color);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-h1,h2,h3,h4,h5,h6{ font-weight:700; letter-spacing:.2px; color:#0b0b0c; }
-.lead{ color:#444; }
-
-/* Links */
-a{ color:var(--zap-green); text-decoration:none; }
-a:hover{ color:var(--zap-green-600); text-decoration:underline; text-underline-offset:2px; }
-a:focus, button:focus, [role="button"]:focus { outline:0; box-shadow:0 0 0 .2rem color-mix(in srgb, var(--zap-green) 25%, transparent); }
-
-/* Utilitárias */
-.text-primary{ color:var(--zap-green) !important; }
-.bg-primary{ background-color:var(--zap-green) !important; }
-.border-primary{ border-color:var(--zap-green) !important; }
-
-.text-secondary{ color:var(--ink) !important; }
-.bg-secondary{ background-color:var(--ink) !important; }
-.border-secondary{ border-color:var(--ink) !important; }
-
-.text-danger{ color:var(--zap-red) !important; }
-.bg-danger{ background-color:var(--zap-red) !important; }
-
-.text-light{ color:#6f6f6f !important; }
-.bg-light{ background-color:#f7f7f8 !important; }
-.text-dark{ color:#0b0b0c !important; }
-.bg-dark{ background-color:#0b0b0c !important; }
-
-.link-primary{ color:var(--zap-green) !important; }
-.link-primary:hover{ color:var(--zap-green-600) !important; }
-
-/* Botões */
-.btn{ border-radius:.6rem; font-weight:600; }
-.btn:focus{ box-shadow:0 0 0 .2rem color-mix(in srgb, var(--zap-green) 25%, transparent); }
-
-.btn-primary{
-    color:#fff; background:var(--zap-green); border-color:var(--zap-green);
-}
-.btn-primary:hover{
-    color:#fff; background:var(--zap-green-600); border-color:var(--zap-green-600);
-}
-.btn-primary:active, .btn-primary.active, .show>.btn-primary.dropdown-toggle{
-    color:#fff; background:var(--zap-green-700); border-color:var(--zap-green-700);
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    color: var(--feiraon-green-dark);
+    letter-spacing: .2px;
 }
 
-.btn-outline-primary{
-    color:var(--zap-green); border-color:var(--zap-green); background:transparent;
-}
-.btn-outline-primary:hover{
-    color:#fff; background:var(--zap-green); border-color:var(--zap-green);
+p, span, li, a {
+    font-weight: 400;
+    color: var(--feiraon-secondary);
 }
 
-/* Formulários */
-.form-control, .form-select{ border-radius:.6rem; }
-.form-control:focus, .form-select:focus{
-    border-color:var(--zap-green); box-shadow:0 0 0 .2rem color-mix(in srgb, var(--zap-green) 15%, transparent); outline:0;
+a {
+    color: var(--feiraon-green-medium);
+    text-decoration: none;
 }
-.form-check-input:checked{ background-color:var(--zap-green); border-color:var(--zap-green); }
-.form-check-input:focus{ border-color:var(--zap-green); box-shadow:0 0 0 .15rem color-mix(in srgb, var(--zap-green) 20%, transparent); }
-.form-switch .form-check-input:focus{ box-shadow:0 0 0 .2rem color-mix(in srgb, var(--zap-green) 15%, transparent); }
-.form-range::-webkit-slider-thumb{ background:var(--zap-green); }
-.form-range::-moz-range-thumb{ background:var(--zap-green); }
-
-/* Navbar / Nav / Tabs */
-.navbar{ background:#fff; border-bottom:1px solid var(--border); }
-.navbar-brand, .navbar .nav-link{ color:var(--ink); }
-.navbar .nav-link:hover{ color:var(--zap-green); }
-
-.nav-link{ color:#2b2b2b; }
-.nav-link:hover{ color:var(--zap-green); }
-
-.nav-tabs .nav-link{ border:0; border-bottom:2px solid transparent; color:#444; }
-.nav-tabs .nav-link:hover{ border-bottom-color:#e5e7eb; }
-.nav-tabs .nav-link.active{ color:var(--zap-green); border-bottom-color:var(--zap-green); background:transparent; }
-
-.nav-pills .nav-link{ border-radius:999px; }
-.nav-pills .nav-link.active{ background:var(--zap-green); }
-
-/* Dropdowns */
-.dropdown-menu{ border-radius:.6rem; border:1px solid #eff1f4; box-shadow:0 8px 24px rgba(0,0,0,.08); }
-.dropdown-item.active, .dropdown-item:active{ background:var(--zap-green); color:#fff; }
-
-/* Cards / List */
-.card{ border:1px solid #eff1f4; border-radius:.6rem; box-shadow:0 6px 20px rgba(0,0,0,.06); background:var(--card); }
-.list-group-item.active{ background:var(--zap-green); border-color:var(--zap-green); }
-
-/* Badges / Alerts */
-.badge.bg-primary, .badge.text-bg-primary{ background-color:var(--zap-green) !important; }
-.alert-primary{ color:#641f12; background:#ffebe8; border-color:#ffc5bb; }
-.alert-danger{ color:#7a1116; background:#fde8ea; border-color:#f8cdd1; }
-
-/* Tabelas */
-.table{ --_bd:#eaecef; border-color:var(--_bd); }
-.table thead th{ border-bottom:2px solid #e5e7eb; color:#111; }
-.table tbody td{ border-top:1px solid #eef1f4; }
-.table-striped>tbody>tr:nth-of-type(odd){ --_bg:#fafafa; background-color:var(--_bg); }
-.table-hover>tbody>tr:hover{ background-color:#f9f9fb; }
-.table-primary{ --_bg:#fff3f1; --_bd:#ffd5ce; background-color:var(--_bg); }
-.table-primary> :is(th,td){ background-color:var(--_bg); border-color:var(--_bd); }
-
-/* Pagination / Progress / Breadcrumbs */
-.page-link{ color:var(--zap-green); border-radius:.5rem; }
-.page-link:hover{ color:var(--zap-green-600); }
-.page-item.active .page-link{ background:var(--zap-green); border-color:var(--zap-green); }
-
-.progress{ background:#eceff3; border-radius:1rem; }
-.progress-bar{ background:var(--zap-green); }
-
-.breadcrumb .breadcrumb-item a{ color:var(--zap-green); }
-.breadcrumb .breadcrumb-item+.breadcrumb-item::before{ color:#9aa1a9; }
-
-/* Modal / Offcanvas */
-.modal-content{ border-radius:.8rem; border:1px solid #eff1f4; box-shadow:0 20px 60px rgba(0,0,0,.16); }
-.modal-header{ border-bottom:1px solid #ececec; }
-.modal-footer{ border-top:1px solid #ececec; }
-.offcanvas{ border-left:1px solid #ececec; }
-.offcanvas-header{ border-bottom:1px solid #ececec; }
-.offcanvas .offcanvas-title{ font-weight:700; }
-
-/* Accordion */
-.accordion-button{ font-weight:600; background:#fff; }
-.accordion-button:not(.collapsed){ color:var(--zap-green); background:#fff3f1; box-shadow:inset 0 -1px 0 rgba(0,0,0,.05); }
-.accordion-button:focus{ box-shadow:0 0 0 .2rem color-mix(in srgb, var(--zap-green) 15%, transparent); }
-.accordion-item{ border:1px solid #eff1f4; border-radius:.6rem; overflow:hidden; }
-
-/* Tooltips / Popovers / Toasts */
-.tooltip .tooltip-inner{ background:#111; }
-.tooltip.bs-tooltip-auto[data-popper-placement^=top] .tooltip-arrow::before{ border-top-color:#111; }
-.popover{ border:1px solid #eff1f4; border-radius:.6rem; box-shadow:0 10px 30px rgba(0,0,0,.12); }
-.popover-header{ background:#fff; font-weight:700; }
-.toast{ border-radius:.6rem; border:1px solid #eff1f4; box-shadow:0 10px 30px rgba(0,0,0,.10); }
-
-/* Close */
-.btn-close:focus{ box-shadow:0 0 0 .2rem color-mix(in srgb, var(--zap-green) 25%, transparent); }
-
-/* Carousel */
-.carousel-indicators [data-bs-target]{ background-color:var(--zap-green); }
-
-/* Helpers e componentes do app */
-.text-brand{ color:var(--support-green) !important; }
-.bg-brand{ background:var(--support-green) !important; color:#fff !important; }
-.card-restaurant .card-img-top{ aspect-ratio:16/9; object-fit:cover; border-top-left-radius:.6rem; border-top-right-radius:.6rem; }
-
-.logo-mark{
-    width:108px;height:28px;background:var(--support-green);border-radius:6px;color:#fff;
-    display:flex;align-items:center;justify-content:center;font-weight:800;letter-spacing:.5px
+a:hover {
+    color: var(--feiraon-green-dark);
+    text-decoration: underline;
+    text-underline-offset: 2px;
 }
-.hero{ background:#fff; border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
 
-/* Chips + scroller */
-.category-scroller{
-    display:flex;gap:.5rem;overflow:auto;white-space:nowrap;padding-bottom:.25rem;
-    -webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;
+small, .text-muted {
+    color: var(--feiraon-muted) !important;
 }
-.category-scroller::-webkit-scrollbar{height:8px}
-.category-scroller::-webkit-scrollbar-thumb{background:#e0e0e0;border-radius:8px}
-.chip{
-    display:inline-flex;align-items:center;gap:.35rem;
-    padding:.5rem .9rem;border-radius:999px;border:1px solid #ffc3ba;
-    background:#ffe8e4;color:var(--zap-green);font-weight:700;white-space:nowrap;scroll-snap-align:start;
-    transition:background .12s ease,color .12s ease,transform .08s ease;
-}
-.chip:hover{ transform:translateY(-1px) }
-.chip[aria-selected="true"]{ background:var(--zap-green); border-color:var(--zap-green); color:#fff }
 
-/* FAB */
-#cartFab{
-    border-radius:999px; box-shadow:0 6px 24px rgba(0,0,0,.2);
-    background:var(--zap-green); color:#fff;
-}
-#cartFab:hover{ background:var(--zap-green-600); }
+/* --------------------------------------------------------------------------
+   3. UTILITÁRIAS (BG / TEXT / BORDER)
+   -------------------------------------------------------------------------- */
+.bg-primary    { background-color: var(--feiraon-green-medium) !important; color: #fff !important; }
+.bg-success    { background-color: var(--feiraon-green-medium) !important; color: #fff !important; }
+.bg-warning    { background-color: var(--feiraon-yellow) !important; color: #111 !important; }
+.bg-danger     { background-color: var(--feiraon-danger) !important; color: #fff !important; }
+.bg-info       { background-color: var(--feiraon-green-light) !important; color: #111 !important; }
+.bg-light      { background-color: var(--feiraon-light) !important; color: #111 !important; }
+.bg-dark       { background-color: var(--feiraon-dark) !important; color: #fff !important; }
 
-/* ==== Dark mode ==== */
-@media (prefers-color-scheme: dark){
-    html,body{ background:#0d0f12; color:#e5e7eb; }
-    .navbar{ background:#111418; border-bottom-color:#1a1f26; }
-    .card,.modal-content,.popover,.toast{ border-color:#1a1f26; box-shadow:none; background:#0f1217; }
-    .dropdown-menu{ background:#0f1217; border-color:#1a1f26; }
-    .table{ color:#d7dce3; }
-    .table tbody td{ border-top-color:#1a1f26; }
+.text-primary   { color: var(--feiraon-green-medium) !important; }
+.text-success   { color: var(--feiraon-green-medium) !important; }
+.text-warning   { color: var(--feiraon-yellow) !important; }
+.text-danger    { color: var(--feiraon-danger) !important; }
+.text-info      { color: var(--feiraon-green-light) !important; }
+.text-light     { color: var(--feiraon-light) !important; }
+.text-dark      { color: var(--feiraon-dark) !important; }
+
+.border-primary   { border-color: var(--feiraon-green-medium) !important; }
+.border-success   { border-color: var(--feiraon-green-medium) !important; }
+.border-warning   { border-color: var(--feiraon-yellow) !important; }
+.border-danger    { border-color: var(--feiraon-danger) !important; }
+.border-info      { border-color: var(--feiraon-green-light) !important; }
+.border-light     { border-color: var(--feiraon-light) !important; }
+.border-dark      { border-color: var(--feiraon-dark) !important; }
+
+/* --------------------------------------------------------------------------
+   4. BOTÕES (SOLID, OUTLINE, LINK)
+   -------------------------------------------------------------------------- */
+.btn {
+    border-radius: .6rem;
+    font-weight: 600;
+    transition: all .15s ease-in-out;
+    box-shadow: 0 2px 6px rgba(0,0,0,.04);
+}
+.btn:focus {
+    box-shadow: 0 0 0 .25rem color-mix(in srgb, var(--feiraon-green-medium) 25%, transparent);
+}
+
+/* === Botões === */
+.btn-primary {
+    color: #fff;
+    background: linear-gradient(135deg, var(--feiraon-green-medium) 0%, var(--feiraon-green-dark) 100%);
+    border: none;
+}
+.btn-primary:hover {
+    background: linear-gradient(135deg, #7CCF4E 0%, #2E6B1D 100%);
+}
+
+.btn-warning {
+    color: #202020;
+    background-color: var(--feiraon-yellow);
+    border: none;
+}
+.btn-warning:hover {
+    background-color: color-mix(in srgb, var(--feiraon-yellow) 85%, black);
+    color: #fff;
+}
+
+.btn-success {
+    color: #fff;
+    background-color: var(--feiraon-green-medium);
+    border: none;
+}
+.btn-success:hover {
+    background-color: color-mix(in srgb, var(--feiraon-green-medium) 85%, black);
+}
+
+.btn-light {
+    color: var(--feiraon-secondary);
+    background-color: #fff;
+    border: 1px solid var(--feiraon-border);
+}
+.btn-light:hover {
+    background-color: #f9f9f9;
+}
+
+/* === Outline === */
+.btn-outline-primary {
+    color: var(--feiraon-green-medium);
+    border: 1px solid var(--feiraon-green-medium);
+    background: transparent;
+}
+.btn-outline-primary:hover {
+    background: var(--feiraon-green-medium);
+    color: #fff;
+}
+
+.btn-outline-warning {
+    color: var(--feiraon-yellow);
+    border-color: var(--feiraon-yellow);
+}
+.btn-outline-warning:hover {
+    background: var(--feiraon-yellow);
+    color: #fff;
+}
+
+/* === Link === */
+.btn-link {
+    color: var(--feiraon-green-medium);
+    font-weight: 600;
+    text-decoration: none;
+}
+.btn-link:hover {
+    color: var(--feiraon-green-dark);
+    text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   5. FORMULÁRIOS E INPUTS
+   -------------------------------------------------------------------------- */
+.form-control, .form-select {
+    border-radius: .6rem;
+    border: 1px solid var(--feiraon-border);
+    background: #fff;
+    color: var(--feiraon-secondary);
+    transition: all .15s ease;
+}
+.form-control:focus, .form-select:focus {
+    border-color: var(--feiraon-green-medium);
+    box-shadow: 0 0 0 .2rem color-mix(in srgb, var(--feiraon-green-medium) 20%, transparent);
+    outline: 0;
+}
+.form-control::placeholder {
+    color: var(--feiraon-muted);
+}
+.form-check-input:checked {
+    background-color: var(--feiraon-green-medium);
+    border-color: var(--feiraon-green-medium);
+}
+.form-range::-webkit-slider-thumb,
+.form-range::-moz-range-thumb {
+    background: var(--feiraon-green-medium);
 }

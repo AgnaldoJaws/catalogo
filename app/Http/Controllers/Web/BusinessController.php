@@ -18,6 +18,7 @@ class BusinessController extends Controller
     public function show(string $slug)
     {
         $business = $this->biz->showBySlug($slug);
+
         if (!$business) {
             abort(404);
         }

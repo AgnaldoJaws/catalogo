@@ -20,6 +20,7 @@ require __DIR__.'/auth.php';
 
 Route::get('/landing', [WaitlistController::class, 'landing'])->name('landing');
 
+Route::view('/termos', 'pages.termos')->name('terms');
 
 // Admin (empresa)
 Route::middleware(['web','auth','verified','role:owner,empresa,superadmin'])

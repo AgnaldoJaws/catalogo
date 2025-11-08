@@ -1,3 +1,4 @@
+
 {{-- resources/views/business/partials/sidebar-filters-array.blade.php --}}
 @php
     /** @var array $sections */

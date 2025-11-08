@@ -1,10 +1,39 @@
-<footer class="footer py-4 mt-4">
-    <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
-        <span class="text-muted small">© {{ date('Y') }} ZapFood</span>
-        <ul class="nav small">
-            <li class="nav-item"><a class="nav-link text-muted" href="#">Termos</a></li>
-            <li class="nav-item"><a class="nav-link text-muted" href="#">Privacidade</a></li>
-            <li class="nav-item"><a class="nav-link text-muted" href="#">Contato</a></li>
-        </ul>
-    </div>
-</footer>
+{{--<footer>--}}
+{{--    <nav class="navbar navbar-light bg-white border-top fixed-bottom shadow-sm">--}}
+{{--        <div class="container justify-content-around text-center small">--}}
+
+{{--            --}}{{-- Início --}}
+{{--            <a href="{{ route('web.home') }}" class="nav-link text-primary fw-semibold">--}}
+{{--                <i class="bi bi-house-door-fill d-block fs-5"></i>--}}
+{{--                Início--}}
+{{--            </a>--}}
+
+
+{{--            --}}{{-- Termos --}}
+{{--            <a href="#" class="nav-link text-muted">--}}
+{{--                <i class="bi bi-file-earmark-text-fill d-block fs-5"></i>--}}
+{{--                Termos--}}
+{{--            </a>--}}
+
+{{--        </div>--}}
+{{--    </nav>--}}
+
+{{--    @include('components.cart-offcanvas')--}}
+{{--</footer>--}}
+
+{{--@push('scripts')--}}
+{{--    <script>--}}
+{{--        document.addEventListener('DOMContentLoaded', () => {--}}
+{{--            const btn = document.getElementById('footerCartBtn');--}}
+{{--            const drawer = document.getElementById('cartDrawer');--}}
+
+{{--            if (btn && drawer) {--}}
+{{--                btn.addEventListener('click', (e) => {--}}
+{{--                    e.preventDefault();--}}
+{{--                    const instance = bootstrap.Offcanvas.getOrCreateInstance(drawer);--}}
+{{--                    instance.show();--}}
+{{--                });--}}
+{{--            }--}}
+{{--        });--}}
+{{--    </script>--}}
+{{--@endpush--}}

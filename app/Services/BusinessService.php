@@ -29,6 +29,7 @@ class BusinessService implements BusinessServiceInterface
             'name'       => $b->name,
             'slug'       => $b->slug,
             'logo_url'   => $logo,
+            'whatsapp'   => $b->whatsapp,
             'about'      => $b->about,
             'avg_rating' => (float) $b->avg_rating,
             'items_count'=> (int) $b->items_count,

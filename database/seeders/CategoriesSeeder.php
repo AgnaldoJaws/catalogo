@@ -11,21 +11,21 @@ class CategoriesSeeder extends Seeder
     public function run(): void
     {
         $cats = [
-            ['Pizzas',              '🍕'],
-            ['Lanches & Burgers',   '🍔'],
-            ['Marmitas & Pratos',   '🍛'],
-            ['Comida Caseira',      '🍲'],
-            ['Porções & Petiscos',  '🍟'],
-            ['Sushi & Temaki',      '🍣'],
-            ['Açaí & Sorvetes',     '🍨'],
-            ['Doces & Sobremesas',  '🍰'],
-            ['Padarias & Cafés',    '☕'],
-            ['Bebidas & Sucos',     '🥤'],
-            ['Cervejas & Drinks',   '🍺'],
-            ['Churrasco & Grelhados','🥩'],
-            ['Massas & Lasanhas',   '🍝'],
-            ['Saudável & Fitness',  '🥗'],
-            ['Delivery em Geral',   '🚚'],
+            ['Hortaliças & Verduras', '🥬'],
+            ['Frutas Frescas', '🍎'],
+            ['Legumes & Raízes', '🥕'],
+            ['Grãos & Cereais', '🌾'],
+            ['Produtos Orgânicos', '🍃'],
+            ['Mel & Derivados', '🍯'],
+            ['Ovos & Laticínios', '🥚'],
+            ['Cafés & Chás Artesanais', '☕'],
+            ['Plantas & Mudas', '🪴'],
+            ['Temperos & Especiarias', '🌿'],
+            ['Pães & Bolos Caseiros', '🍞'],
+            ['Sucos & Polpas Naturais', '🍹'],
+            ['Artesanato Rural', '🧺'],
+            ['Cestas & Kits Sustentáveis', '🧃'],
+            ['Produtos da Roça', '🚜'],
         ];
 
         foreach ($cats as [$name, $emoji]) {
