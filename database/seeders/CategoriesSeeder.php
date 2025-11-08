@@ -15,7 +15,7 @@ class CategoriesSeeder extends Seeder
             ['Frutas Frescas', '🍎'],
             ['Legumes & Raízes', '🥕'],
             ['Grãos & Cereais', '🌾'],
-            ['Produtos Orgânicos', '🍃'],
+            ['Produtos Naturais', '🍃'],
             ['Mel & Derivados', '🍯'],
             ['Ovos & Laticínios', '🥚'],
             ['Cafés & Chás Artesanais', '☕'],
@@ -26,6 +26,7 @@ class CategoriesSeeder extends Seeder
             ['Artesanato Rural', '🧺'],
             ['Cestas & Kits Sustentáveis', '🧃'],
             ['Produtos da Roça', '🚜'],
+            ['Licores e Bebidas Típicas', '🍹'],
         ];
 
         foreach ($cats as [$name, $emoji]) {
