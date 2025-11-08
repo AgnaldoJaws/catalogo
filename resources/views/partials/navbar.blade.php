@@ -20,8 +20,8 @@
         <button class="btn border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" style="box-shadow: none;">
             <i class="bi bi-list fs-4"></i>
         </button>
-        <ul class="navbar-nav ms-lg-3 align-items-lg-center">
-            <li class="nav-item"><a class="btn btn-primary" href="{{ route('landing') }}">Cadastrar meu comércio</a></li>
-        </ul>
+{{--        <ul class="navbar-nav ms-lg-3 align-items-lg-center">--}}
+{{--            <li class="nav-item"><a class="btn btn-primary" href="{{ route('landing') }}">Cadastrar meu comércio</a></li>--}}
+{{--        </ul>--}}
     </div>
 </nav>

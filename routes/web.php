@@ -18,7 +18,7 @@ Route::get('/empresa/{slug}', [BusinessController::class, 'show'])->name('web.bu
 require __DIR__.'/auth.php';
 
 
-Route::get('/landing', [WaitlistController::class, 'landing'])->name('landing');
+//Route::get('/landing', [WaitlistController::class, 'landing'])->name('landing');
 
 Route::view('/termos', 'pages.termos')->name('terms');
 
