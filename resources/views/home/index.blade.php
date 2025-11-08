@@ -132,24 +132,36 @@
         <!-- Cards -->
         <div id="pratos" class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3 mb-4">
             @foreach($page as $biz)
+                @php
+                    $business = $biz['business'] ?? null;
+                    $slug = $business['slug'] ?? null;
+                    $name = $business['name'] ?? 'Empresa';
+                @endphp
 
                 <div class="col">
                     <div class="card h-100 shadow-sm border-0">
-                        <img src="{{$biz['thumb_url']}}"
-                             class="card-img-top img-fluid" alt="{{ $biz['business']['name'] }}">
+                        <img src="{{ $biz['thumb_url'] ?? asset('img/placeholder.png') }}"
+                             class="card-img-top img-fluid" alt="{{ $name }}">
                         <div class="card-body p-2">
-                            <h6 class="card-title fw-semibold mb-1 text-truncate">{{ $biz['business']['name'] }}</h6>
+                            <h6 class="card-title fw-semibold mb-1 text-truncate">{{ $name }}</h6>
                             <p class="card-text text-muted small mb-0">{{ $cityName }}</p>
                         </div>
                         <div class="card-footer bg-transparent border-0 text-center">
-                            <a href="{{ route('web.business.show', $biz['business']['slug']) }}"
-                               class="btn btn-outline-primary rounded-pill fw-semibold w-100">
-                                Conhecer
-                            </a>
+                            @if($slug)
+                                <a href="{{ route('web.business.show', $slug) }}"
+                                   class="btn btn-outline-primary rounded-pill fw-semibold w-100">
+                                    Conhecer
+                                </a>
+                            @else
+                                <button class="btn btn-secondary rounded-pill fw-semibold w-100" disabled>
+                                    Indisponível
+                                </button>
+                            @endif
                         </div>
                     </div>
                 </div>
             @endforeach
+
         </div>
 
         <!-- Paginação -->
